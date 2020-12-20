@@ -1,25 +1,39 @@
 import logo from './logo.svg';
 import './App.css';
+import {Grid, Paper} from "@material-ui/core"
+import Header from './components/Header'
+import Signin from './components/Auth/Signin'
+import { Route, Link, Switch } from "react-router-dom";
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark',
 
-function App() {
+    primary: {
+      main: '#00695c',
+    },
+    secondary: {
+      main: '#6a1b9a',
+    }
+  }
+})
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ThemeProvider theme={theme}>
+      <Paper style={{height: "100vh"}}>
+        <Grid container direction="column">
+          <Grid item>
+          {/* The NavBar */}
+            <Header /> 
+          </Grid>
+          <Switch>
+            <Route exact path="/login" render={(rp) => ( <Signin {...rp}/>)}
+            />
+          </Switch>
+        </Grid>
+      </Paper>
+    </ThemeProvider>
+  )
 }
 
 export default App;
