@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -45,12 +45,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  text: {
-    color: theme.palette.text.primary
-  }
 }));
 
-const SignIn = (props) => {
+const Signup = (props) => {
   const [formData, setFormData] = React.useState({
     username: "",
     password: ""
@@ -61,16 +58,16 @@ const SignIn = (props) => {
     if(userData) {
             console.log(userData)
             const {token, user} =userData;
-            dispatch({type: "auth", payload: {token, username: user.username, user_id: user.id}})
+            dispatch({type: "auth", payload: {token, username: user.username,  user_id: user.id}})
             window.localStorage.setItem("auth", JSON.stringify({token, username: user.username}))
-            props.history.push("/")
+            props.history.push(`/user/new/info/${user.id}`)
     }
 }, [userData])
   const classes = useStyles();
 
 
-const login = () => {
-  return fetch(state.url + "/login",{
+const signup = () => {
+  return fetch(state.url + "/users",{
     method: "post",
     headers: {
         "Content-Type": "application/json"
@@ -86,7 +83,7 @@ const handleChange = (event) => {
 }
 const handleSubmit = (event) => {
   event.preventDefault()
-  login().then((data) => {
+  signup().then((data) => {
           setUserData(data)
   })
 }
@@ -99,7 +96,7 @@ const handleSubmit = (event) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign Up
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <TextField
@@ -141,12 +138,12 @@ const handleSubmit = (event) => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2"  className = {classes.text}>
+              <Link href="#" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2"  className = {classes.text}>
+              <Link href="#" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
@@ -160,4 +157,4 @@ const handleSubmit = (event) => {
   );
 }
 
-export default SignIn
+export default Signup

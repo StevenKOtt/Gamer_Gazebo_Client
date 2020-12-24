@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
-    w idth: theme.spacing(10),
+    width: theme.spacing(10),
     height: theme.spacing(10),
   },
   search: {
@@ -73,13 +73,13 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-const Header = () => {
+const Header = (props) => {
   const classes = useStyles();
   const {state, dispatch} = useAppState()
 
   return (
    
-      <AppBar position="static" color="primary">
+      <AppBar position="fixed" color="primary">
         <Toolbar>
           <Grid container justify="space-between" alignItems="center">
             <Grid item sm={2} md={1} lg={1}>
@@ -100,24 +100,31 @@ const Header = () => {
             />
           </div>
             </Grid>
+            
             <Grid item>
             <div>
-              <IconButton
+           {!state.token ? (
+            <>
+               <Button variant="contained" component={Link} to={'/login'} color="success">
+                  Login
+              </Button>
+              <Button variant="contained" color="secondary" component={Link} to={'/signup'}>
+                  Sign-Up
+              </Button></>):(
+              <><IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 color="inherit"
+                component={Link} to={`/user/profile/${state.user_id}`}
               >
-                <AccountCircle />
+                <AccountCircle/>
               </IconButton>
-              {!state.token ? (<><Button variant="contained" component={Link} to={'/login'} color="success">
-                  Login
-              </Button>
-              <Button variant="contained" color="secondary">
-                  Sign-Up
-              </Button></>):(<Button variant="contained" color="secondary">
+              <Button variant="contained" component={Link} to={'/'} color="secondary" onClick={()=> {
+        dispatch({type: "logout"})
+      }}>
                   Log-Out
-              </Button>)}
+              </Button></>)}
             </div>
             </Grid>
           </Grid>
@@ -127,6 +134,7 @@ const Header = () => {
   );
 }
 export default Header
+
 
 
 

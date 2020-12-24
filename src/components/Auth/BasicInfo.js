@@ -2,7 +2,7 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
+import {TextField, MenuItem} from '@material-ui/core/';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import {useAppState} from "../../AppState.js"
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -45,35 +45,28 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  text: {
-    color: theme.palette.text.primary
-  }
 }));
 
-const SignIn = (props) => {
-  const [formData, setFormData] = React.useState({
-    username: "",
-    password: ""
-  })
-  const [userData, setUserData] = React.useState(null)
-  const {state, dispatch} = useAppState()
-  React.useEffect(() => {
-    if(userData) {
-            console.log(userData)
-            const {token, user} =userData;
-            dispatch({type: "auth", payload: {token, username: user.username, user_id: user.id}})
-            window.localStorage.setItem("auth", JSON.stringify({token, username: user.username}))
-            props.history.push("/")
-    }
-}, [userData])
-  const classes = useStyles();
+const BasicInfoFirst = (props) => {
+const {state, dispatch} = useAppState()
+const {token} = state
+const classes = useStyles();
+const [formData, setFormData] = React.useState({
+      pronoun: "",
+      username: state.username,
+      country: "",
+      about_me: "",
+      user_id: state.user_id,
+      birthdate: null,
+      profilepic: null
+    })
 
-
-const login = () => {
-  return fetch(state.url + "/login",{
+const signup = () => {
+  return fetch(state.url + "/basic_user_infos",{
     method: "post",
     headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: "bearer " + token
     },
     body: JSON.stringify(formData)
 })
@@ -86,10 +79,9 @@ const handleChange = (event) => {
 }
 const handleSubmit = (event) => {
   event.preventDefault()
-  login().then((data) => {
-          setUserData(data)
-  })
+  signup()
 }
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -99,20 +91,55 @@ const handleSubmit = (event) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign Up
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            onChange={handleChange}
+            name="country"
+            label="Country"
+            type="file"
+            id="country"
+          />
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="username"
+            id="pronoun"
             onChange={handleChange}
-            label="Username"
-            name="username"
-            autoComplete="username"
-            autoFocus
+            select
+            label="Select"
+            name="pronoun"
+            helperText="Please select your Pronouns"
+          >
+            <MenuItem key="he" value="he">
+            he
+            </MenuItem>
+            <MenuItem key="she" value="she">
+            she
+            </MenuItem> 
+            <MenuItem key="they" value="they">
+            they
+            </MenuItem> 
+            <MenuItem key="other" value="other">
+            other
+            </MenuItem>        
+          </TextField>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            onChange={handleChange}
+            name="country"
+            label="Country"
+            type="country"
+            id="country"
           />
           <TextField
             variant="outlined"
@@ -120,11 +147,20 @@ const handleSubmit = (event) => {
             required
             fullWidth
             onChange={handleChange}
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
+            name="about_me"
+            label="About Me"
+            type="about_me"
+            id="about_me"
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            onChange={handleChange}
+            name="birthdate"
+            type="date"
+            id="about_me"
           />
           {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -141,12 +177,12 @@ const handleSubmit = (event) => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2"  className = {classes.text}>
+              <Link href="#" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2"  className = {classes.text}>
+              <Link href="#" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
@@ -160,4 +196,4 @@ const handleSubmit = (event) => {
   );
 }
 
-export default SignIn
+export default BasicInfoFirst

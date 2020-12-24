@@ -6,7 +6,8 @@ import React, {useContext, useReducer} from "react"
 const initialState = {
     url: 'http://localhost:3000',
     token: null,
-    username: null
+    username: null,
+    user_id: 0
 }
 
 
