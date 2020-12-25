@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const App = (props) => {
+export default function App(props){
   const {state, dispatch} = useAppState()
   const classes = useStyles();
 
@@ -74,4 +74,3 @@ const App = (props) => {
   )
 }
 
-export default App;
