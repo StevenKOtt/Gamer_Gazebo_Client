@@ -1,10 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
+import React from 'react'
 import {Grid, Paper} from "@material-ui/core"
 import Header from './components/Header'
 import Signin from './components/Auth/Signin'
 import Signup from './components/Auth/Signup'
 import Profile from './components/Pages/UserProfile'
+import Search from './components/Pages/Search'
 import BasicInfoFirst from './components/Auth/BasicInfo'
 import { Route, Link, Switch } from "react-router-dom";
 import {useAppState} from './AppState.js'
@@ -35,16 +37,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const App = () => {
+const App = (props) => {
   const {state, dispatch} = useAppState()
   const classes = useStyles();
+
+  const [searchData, setSearchData] = React.useState({
+    keyword: "",
+    setkeyword: ""
+  })
   return (
     <ThemeProvider theme={theme}>
       <Paper style={{background: '#18191A'}}>
         <Grid container direction="column">
           <Grid item>
           {/* The NavBar */}
-            <Header /> 
+            <Header  searchData={searchData} setSearchData={setSearchData} history= {props.history} /> 
           </Grid>
           
           <Switch>
@@ -54,6 +61,8 @@ const App = () => {
             <Route exact path="/signup" render={(rp) => ( <Signup {...rp}/>)}
             />
             <Route exact path="/user/new/info/:id" render={(rp) => ( <BasicInfoFirst {...rp}/>)}
+            />
+            <Route exact path="/user/search" render={(rp) => ( <Search {...rp} searchData={searchData} setSearchData={setSearchData}/>)}
             />
             <Route exact path="/user/profile/:id" render={(rp) => ( <Profile {...rp}/>)}
             />

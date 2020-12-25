@@ -9,7 +9,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import {AccountCircle} from '@material-ui/icons';
 import SearchIcon from '@material-ui/icons/Search';
 import Logo from '../images/gazebo.png'
-import { Link } from "react-router-dom"
+import { Link, Redirect, useHistory } from "react-router-dom"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,8 +75,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = (props) => {
   const classes = useStyles();
+  const {setSearchData, searchData} = props
   const {state, dispatch} = useAppState()
+  const history = useHistory();
 
+  const handleChange = (event) => {
+    setSearchData({...searchData,[event.target.name]: event.target.value})
+  }
   return (
    
       <AppBar position="fixed" color="primary">
@@ -92,11 +97,21 @@ const Header = (props) => {
             </div>
             <InputBase
               placeholder="Search…"
+              name="keyword"
+              onChange={handleChange}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  setSearchData({...searchData,["setkeyword"]: ""})
+                  setSearchData({...searchData,["setkeyword"]: searchData.keyword})
+                  console.log('Enter key pressed');
+                  history.push('/user/search')
+
+                }}}
             />
           </div>
             </Grid>

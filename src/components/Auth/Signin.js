@@ -63,7 +63,7 @@ const SignIn = (props) => {
             const {token, user} =userData;
             dispatch({type: "auth", payload: {token, username: user.username, user_id: user.id}})
             window.localStorage.setItem("auth", JSON.stringify({token, username: user.username}))
-            props.history.push("/")
+            props.history.push(`/`)
     }
 }, [userData])
   const classes = useStyles();

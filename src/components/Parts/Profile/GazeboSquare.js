@@ -6,7 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
-import { ListItem, List, ListItemAvatar, ListItemText,Divider, Avatar, Grid, Tooltip, IconButton,Backdrop,Fade, Modal} from '@material-ui/core/';
+import { ListItem, Grow, List, ListItemAvatar, ListItemText,Divider, Avatar, Grid, Tooltip, IconButton,Backdrop,Fade, Modal} from '@material-ui/core/';
 import DeleteIcon from '@material-ui/icons/Delete'
 import Typography from '@material-ui/core/Typography';
 import Playstation from './../../../images/Game_Card_Backgrounds/playstation.png'
@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme)=> ({
  const GameCard =(props) => {
 
   const classes = useStyles();
-
   const [openEdit, setEditOpen] = React.useState(false);
 
   const handleEditOpen = () => {
@@ -44,8 +43,7 @@ const useStyles = makeStyles((theme)=> ({
     setEditOpen(false);
   };
 
-  const {product, screenname, currently_playing, id, getGamerCards} = props
-
+  const {product, screenname, index, currently_playing, id, getGamerCards, username} = props
 const type_of_name =(productType) => {
     if(productType == "Playstation")
         return "PSN"
@@ -86,7 +84,47 @@ const type_of_color =(productType) => {
 
 }
 
+const editdeletButtons = () => {
+    return (
+        <>
+        <Grid item xs={2}>
+            <Tooltip title="Edit">
+                <IconButton aria-label="edit" onClick={handleEditOpen}>
+                    <EditIcon />
+                </IconButton>
+            </Tooltip>
+            <Modal
+            className={classes.modal}
+            open={openEdit}
+            onClose={handleEditClose}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+                timeout: 500,
+              }}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+            >
+            <Fade in={openEdit}>
+                <Grid container className={classes.paper} sm={10}>
+                    <FormGS handleEditClose={handleEditClose} action='edit' getGamerCards={getGamerCards} product={product} screenname={screenname} currently_playing={currently_playing} id={id}/>     
+                 </Grid>
+            </Fade>
+            </Modal>
+            </Grid>
+            <Grid item item xs={2}>
+            <Tooltip title="Delete">
+                <IconButton aria-label="delete">
+                    <DeleteIcon />
+                </IconButton>
+            </Tooltip>
+            </Grid>
+            </>
+    )
+}
+
   return (
+    <Grow in={true} timeout={1000+(index*1000)}> 
     <Card className={classes.root}>
       <CardActionArea>
         <CardMedia
@@ -125,42 +163,13 @@ const type_of_color =(productType) => {
                 more about {currently_playing}
             </Button>
             </Grid>
-            <Grid item xs={2}>
-            <Tooltip title="Edit">
-                <IconButton aria-label="edit" onClick={handleEditOpen}>
-                    <EditIcon />
-                </IconButton>
-            </Tooltip>
-            <Modal
-            className={classes.modal}
-            open={openEdit}
-            onClose={handleEditClose}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-                timeout: 500,
-              }}
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-            >
-            <Fade in={openEdit}>
-                <Grid container className={classes.paper} sm={10}>
-                    <FormGS handleEditClose={handleEditClose} action='edit' getGamerCards={getGamerCards} product={product} screenname={screenname} currently_playing={currently_playing} id={id}/>     
-                 </Grid>
-            </Fade>
-            </Modal>
-            </Grid>
-            <Grid item item xs={2}>
-            <Tooltip title="Delete">
-                <IconButton aria-label="delete">
-                    <DeleteIcon />
-                </IconButton>
-            </Tooltip>
-            </Grid>
+            {JSON.parse(window.localStorage.getItem('auth')).username
+===username ? (editdeletButtons()) : null}
         </Grid>
         </CardContent>
       </CardActionArea>
     </Card>
+    </Grow> 
   );
 }
 

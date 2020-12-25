@@ -74,7 +74,7 @@ const Profile = (props) => {
       React.useEffect(() => {
         getProfileInfo()
         getGamerCards()
-      }, [])
+      }, [userInfo])
       const [openNew, setNewOpen] = React.useState(false);
 
       const handleNewOpen = () => {
@@ -109,6 +109,7 @@ const Profile = (props) => {
                     <Typography variant="body1">
                         {profileData.about_me}
                     </Typography>
+
             </Grid>
         </Grid>
         </>
@@ -125,9 +126,9 @@ const Profile = (props) => {
             {profileData ? loaded():(<CircularProgress color="secondary" />)}
             </Paper>
             <Grid container item xs={12} alignItems="center" justify="center" spacing={3}>
-                    {gameCardData ? gameCardData.map((card) => (
+                    {(gameCardData && profileData) ? gameCardData.map((card, index) => (
                         <Grid item xs={6} sm={4} lg={3}>
-                        <GameCard getGamerCards={getGamerCards} product ={card.product} screenname={card.screenname} currently_playing={card.currently_playing} id={card.id}/>
+                        <GameCard getGamerCards={getGamerCards} product ={card.product} screenname={card.screenname} username={profileData.username}currently_playing={card.currently_playing} index={index} id={card.id}/>
                         </Grid>
                     )) : (<CircularProgress color="secondary" />)}
                     <Grid item xs={6} sm={4} lg={3}>
