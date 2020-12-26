@@ -50,7 +50,7 @@ const Profile = (props) => {
     const [gameCardData, setGameCardData] = React.useState()
 
     const getProfileInfo = async () => {
-        fetch(`${state.url}/basic_user_infos/${userInfo}`, {
+        return fetch(`${state.url}/basic_user_infos/${userInfo}`, {
             headers: {
             Authorization: "bearer " + token}})
           .then((response) => response.json())
@@ -61,7 +61,7 @@ const Profile = (props) => {
       };
 
       const getGamerCards = async () => {
-        fetch(`${state.url}/game_cards/?user_id=${userInfo}`, {
+        return fetch(`${state.url}/game_cards/?user_id=${userInfo}`, {
             headers: {
             Authorization: "bearer " + token}})
           .then((response) => response.json())
