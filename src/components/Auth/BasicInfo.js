@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { DirectUpload } from 'activestorage';
 
 function Copyright() {
   return (
@@ -58,31 +59,63 @@ const [formData, setFormData] = React.useState({
       about_me: "",
       user_id: state.user_id,
       birthdate: null,
-      profilepic: null
+      image: {}
     })
 
-const signup = () => {
-  return fetch(state.url + "/basic_user_infos",{
+    const uploadFile = (file, user) => {
+      const upload = new DirectUpload(file, `${state.url}/rails/active_storage/direct_uploads`)
+      upload.create((error, blob) => {
+        if (error) {
+          console.log(error)
+        } else {
+          fetch(`${state.url}/basic_user_infos/${state.user_id}`, {
+            method: 'PUT',
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "bearer " + token,
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({image: blob.signed_id})
+          }) 
+          .then(response => response.json())
+          .then(result => console.log(result))
+        }
+      })
+    }
+
+
+
+const handleChange = (event) => {
+  if (event.target.name === "image") {
+    console.log(event.target.files[0])
+    setFormData({...formData,[event.target.name]: event.target.files[0]})
+
+  }
+  else{
+      setFormData({...formData,[event.target.name]: event.target.value})
+  }
+}
+const handleSubmit = (event) => {
+  event.preventDefault()
+  fetch(state.url + "/basic_user_infos",{
     method: "post",
     headers: {
         "Content-Type": "application/json",
         Authorization: "bearer " + token
     },
-    body: JSON.stringify(formData)
+    body: JSON.stringify({
+      pronoun: formData.pronoun,
+      username: formData.username,
+      country: formData.country,
+      about_me: formData.about_me,
+      user_id: formData.user_id,
+      birthdate: formData.birthdate,
+      })
 })
 .then(response => response.json())
+.then(data => uploadFile(formData.image, data))
+console.log(formData.image)
 }
-
-
-const handleChange = (event) => {
-  setFormData({...formData,[event.target.name]: event.target.value})
-}
-const handleSubmit = (event) => {
-  event.preventDefault()
-  signup()
-}
-
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -100,10 +133,10 @@ const handleSubmit = (event) => {
             required
             fullWidth
             onChange={handleChange}
-            name="country"
-            label="Country"
+            name="image"
+            label="Profile_Picture"
             type="file"
-            id="country"
+            id="image"
           />
           <TextField
             variant="outlined"
@@ -173,7 +206,7 @@ const handleSubmit = (event) => {
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            Complete Sign-Up
           </Button>
           <Grid container>
             <Grid item xs>

@@ -40,7 +40,7 @@ return (
 
             {searchResults ? searchResults.map((user, index) => (
             <Grid item sm={6}>
-            <UserCard checked={checked} index={index} username={user.username} pronoun={user.pronoun} user_id={user.user_id} about_me={user.about_me}/></Grid>
+            <UserCard checked={checked} index={index} image={user.image} username={user.username} pronoun={user.pronoun} user_id={user.user_id} about_me={user.about_me}/></Grid>
             )) : (<CircularProgress color="secondary" />).then}
     </Grid>
     <Grid item sm={1}> 

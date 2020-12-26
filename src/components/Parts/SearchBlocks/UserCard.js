@@ -2,13 +2,15 @@ import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import {CardMedia, ButtonBase, Grow} from '@material-ui/core';
+import {CardMedia, ButtonBase, Grow, Avatar} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import {useHistory} from 'react-router-dom'
+import {useAppState} from '../../../AppState.js'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,12 +36,18 @@ const useStyles = makeStyles((theme) => ({
     height: 38,
     width: 38,
   },
+  large: {
+    width: theme.spacing(14),
+    height: theme.spacing(14)
+},
 }));
 
 const UserCard = (props) => {
+  const {state, dispatch} = useAppState()
+  const {token} = state
   const classes = useStyles();
   const theme = useTheme();
-  const {pronoun, username, about_me, user_id, index} = props
+  const {pronoun, username, about_me, user_id, index, image} = props
   const preventDefault = (event) => event.preventDefault();
   const history = useHistory(); 
 
@@ -54,6 +62,7 @@ const UserCard = (props) => {
           <Typography component="h5" variant="h5">
             {username}
           </Typography>
+          <Avatar alt="Steven Ott" src={`${state.url}/${image}`} className={classes.large} />
           <Typography variant="subtitle1" color="textSecondary">
             {about_me}
           </Typography>

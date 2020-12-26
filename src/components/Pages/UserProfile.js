@@ -1,7 +1,7 @@
 import React from 'react';
 import ProfileInfo from '../Parts/Profile/ProfileInfo'
 import GameCard from '../Parts/Profile/GazeboSquare'
-import {Paper, Grid, Card,CardContent, Typography,CircularProgress, Avatar, Divider,Tooltip,IconButton,Modal,Backdrop,Fade} from '@material-ui/core/';
+import {Paper, Grid, Card,CardContent,Slide, Typography,CircularProgress, Avatar, Divider,Tooltip,IconButton,Modal,Backdrop,Fade} from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 import UserProfilePhoto from '../../images/profilepictest.png'
 import {useAppState} from '../../AppState.js'
@@ -91,7 +91,7 @@ const Profile = (props) => {
         <>
         <Grid container item direction="column" alignItems='center' spacing={2}>
             <Grid item xs={12}>
-                    <Avatar alt="Steven Ott" src="https://p16-va-default.akamaized.net/img/musically-maliva-obj/1641700153405446~c5_720x720.jpeg" className={classes.large} />
+                    <Avatar alt="Steven Ott" src={`${state.url}/${profileData.image}`} className={classes.large} />
             </Grid>
             <Grid item xs={12}>
                 <Typography variant="h3">
@@ -122,9 +122,11 @@ const Profile = (props) => {
     <Grid container justify='space-around' className={classes.grid} spacing={2}>
         <Grid item  sm={1}></Grid>
         <Grid container item direction= "column" xs={12} sm={10} spacing ={4}>
+            <Slide in={'true'} direction={"right"} timeout={500}>
             <Paper className = {classes.paperComponents} elevation={6} style={{backgroundImage: `url(${Collage})`}}>
             {profileData ? loaded():(<CircularProgress color="secondary" />)}
             </Paper>
+            </Slide>
             <Grid container item xs={12} alignItems="center" justify="center" spacing={3}>
                     {(gameCardData && profileData) ? gameCardData.map((card, index) => (
                         <Grid item xs={6} sm={4} lg={3}>
