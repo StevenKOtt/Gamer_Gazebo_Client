@@ -4,7 +4,7 @@ import React, {useContext, useReducer} from "react"
 // INITIAL STATE
 
 const initialState = {
-    url: 'https://gamergazeboapi.herokuapp.com/',
+    url: 'https://gamergazeboapi.herokuapp.com',
     token: null,
     username: null,
     user_id: 0
@@ -24,7 +24,7 @@ const reducer = (state, action) => {
                 return newState
                 break;
             case "logout":
-                newState = {...state, token: null, username: null, notes: null}
+                newState = {...state, token: null, username: null}
                 window.localStorage.removeItem("auth")
                 return newState;
                 break;
