@@ -97,7 +97,7 @@ const handleChange = (event) => {
 }
 const handleSubmit = (event) => {
   event.preventDefault()
-  fetch(state.url + "/basic_user_infos",{
+  return fetch(state.url + "/basic_user_infos",{
     method: "post",
     headers: {
         "Content-Type": "application/json",
