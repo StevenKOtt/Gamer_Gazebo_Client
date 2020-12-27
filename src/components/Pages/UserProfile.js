@@ -52,6 +52,8 @@ const Profile = (props) => {
     const getProfileInfo = async () => {
         return fetch(`${state.url}/basic_user_infos/${userInfo}`, {
             headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": '*',  
             Authorization: "bearer " + token}})
           .then((response) => response.json())
           .then((data) => {

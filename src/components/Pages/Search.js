@@ -11,6 +11,8 @@ const Search = (props) => {
     const getProfileInfo = async () => {
         fetch(`${state.url}/search?keyword=${searchData.setkeyword}`, {
             headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": '*',
             Authorization: "bearer " + token}})
           .then((response) => response.json())
           .then((data) => {
