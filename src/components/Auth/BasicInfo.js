@@ -73,7 +73,8 @@ const [formData, setFormData] = React.useState({
             headers: {
               "Content-Type": "application/json",
               Authorization: "bearer " + token,
-              'Accept': 'application/json'
+              'Accept': 'application/json',
+              "Access-Control-Allow-Origin": '*'
             },
             body: JSON.stringify({image: blob.signed_id})
           }) 
@@ -101,6 +102,7 @@ const handleSubmit = (event) => {
     method: "post",
     headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": '*',
         Authorization: "bearer " + token
     },
     body: JSON.stringify({
