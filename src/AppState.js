@@ -4,7 +4,7 @@ import React, {useContext, useReducer} from "react"
 // INITIAL STATE
 
 const initialState = {
-    url: 'https://gamergazeboapi.herokuapp.com',
+    url: 'http://localhost:3000',
     token: null,
     username: null,
     user_id: 0
