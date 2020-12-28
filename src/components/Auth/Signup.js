@@ -70,7 +70,8 @@ const signup = () => {
   return fetch(state.url + "/users",{
     method: "post",
     headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": '*'
     },
     body: JSON.stringify(formData)
 })

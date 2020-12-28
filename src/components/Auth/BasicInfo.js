@@ -132,7 +132,6 @@ console.log(formData.image)
         <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             onChange={handleChange}
             name="image"
