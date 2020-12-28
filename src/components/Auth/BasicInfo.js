@@ -68,12 +68,14 @@ const [formData, setFormData] = React.useState({
         if (error) {
           console.log(error)
         } else {
-          fetch(`${state.url}/basic_user_infos/${state.user_id}`, {
+          return fetch(`${state.url}/basic_user_infos/${state.user_id}`, {
             method: 'PUT',
             headers: {
               "Content-Type": "application/json",
               Authorization: "bearer " + token,
               'Accept': 'application/json',
+              "Access-Control-Allow-Origin": '*',
+              "Access-Control-Allow-Credentials" : true 
             },
             body: JSON.stringify({image: blob.signed_id})
           }) 

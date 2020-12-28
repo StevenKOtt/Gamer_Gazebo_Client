@@ -53,7 +53,8 @@ const Profile = (props) => {
         return fetch(`${state.url}/basic_user_infos/${userInfo}`, {
             headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": '*',  
+            "Access-Control-Allow-Origin": '*',
+            "Access-Control-Allow-Credentials" : true,   
             Authorization: "bearer " + token}})
           .then((response) => response.json())
           .then((data) => {
