@@ -74,7 +74,6 @@ const [formData, setFormData] = React.useState({
               "Content-Type": "application/json",
               Authorization: "bearer " + token,
               'Accept': 'application/json',
-              "Access-Control-Allow-Origin": '*'
             },
             body: JSON.stringify({image: blob.signed_id})
           }) 
