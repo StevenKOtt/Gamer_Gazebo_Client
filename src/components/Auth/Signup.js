@@ -13,13 +13,19 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Gaymer Gazebo Corps
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -54,17 +60,30 @@ const Signup = (props) => {
   })
   const [userData, setUserData] = React.useState(null)
   const {state, dispatch} = useAppState()
+  const [open, setOpen] = React.useState(false);
   React.useEffect(() => {
     if(userData) {
             console.log(userData)
             const {token, user} =userData;
+            if(user){
             dispatch({type: "auth", payload: {token, username: user.username,  user_id: user.id}})
             window.localStorage.setItem("auth", JSON.stringify({token, username: user.username}))
             props.history.push(`/user/new/info/${user.id}`)
+            }
+            else{
+            setOpen(true)
+            }
     }
 }, [userData])
   const classes = useStyles();
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
 const signup = () => {
   return fetch(state.url + "/users",{
@@ -144,12 +163,15 @@ const handleSubmit = (event) => {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
             </Grid>
           </Grid>
         </form>
+
+        <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="warning">
+              It seems that Username has already been taken. Please try a different Username.
+        </Alert>
+        </Snackbar>
       </div>
       <Box mt={8}>
         <Copyright />

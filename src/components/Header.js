@@ -88,7 +88,7 @@ const Header = (props) => {
         <Toolbar>
           <Grid container justify="space-between" alignItems="center">
             <Grid item sm={2} md={1} lg={1}>
-            <img className={classes.name} src={Logo}/>
+           <Link to="/"> <img className={classes.name} src={Logo}/></Link>
             </Grid>
             <Grid item sm={3}>
             <div className={classes.search}>

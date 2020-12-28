@@ -13,13 +13,20 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Gamer Gazebo Corps
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -56,18 +63,31 @@ const SignIn = (props) => {
     password: ""
   })
   const [userData, setUserData] = React.useState(null)
+  const [open, setOpen] = React.useState(false);
   const {state, dispatch} = useAppState()
   React.useEffect(() => {
     if(userData) {
             console.log(userData)
             const {token, user} =userData;
+            if(user){
             dispatch({type: "auth", payload: {token, username: user.username, user_id: user.id}})
             window.localStorage.setItem("auth", JSON.stringify({token, username: user.username}))
-            props.history.push(`/`)
+            props.history.push(`/`)}
+            else {
+              setOpen(true)
+            }
+
     }
 }, [userData])
   const classes = useStyles();
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
 const login = () => {
   return fetch(state.url + "/login",{
@@ -152,6 +172,14 @@ const handleSubmit = (event) => {
             </Grid>
           </Grid>
         </form>
+
+
+        <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+          You have entered an incorrect username or password. Please try again.
+        </Alert>
+        </Snackbar>
+        
       </div>
       <Box mt={8}>
         <Copyright />
