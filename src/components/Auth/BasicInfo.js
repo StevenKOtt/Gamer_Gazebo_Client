@@ -79,8 +79,8 @@ const [formData, setFormData] = React.useState({
             },
             body: JSON.stringify({image: blob.signed_id})
           }) 
-          .then(response => response.json())
-          .then(result => console.log(result))
+          // .then(response => response.json())
+          // .then(result => console.log(result))
         }
       })
     }
