@@ -6,12 +6,15 @@ import Header from './components/Header'
 import Signin from './components/Auth/Signin'
 import Signup from './components/Auth/Signup'
 import Profile from './components/Pages/UserProfile'
+import Home from './components/Pages/Home'
 import Search from './components/Pages/Search'
 import BasicInfoFirst from './components/Auth/BasicInfo'
 import { Route, Link, Switch } from "react-router-dom";
 import {useAppState} from './AppState.js'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
+import {useHistory} from 'react-router-dom'
+
 
 const theme = createMuiTheme({
   palette: {
@@ -38,7 +41,17 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function App(props){
+  const history = useHistory(); 
   const {state, dispatch} = useAppState()
+  React.useState(() => {
+    const auth = JSON.parse(window.localStorage.getItem("auth"))
+    if (auth){
+        dispatch({type: "auth", payload: auth})
+        history.push(`/`)
+     } else {
+      history.push(`/login`)
+  }
+  }, [])
   const classes = useStyles();
 
   const [searchData, setSearchData] = React.useState({
@@ -56,6 +69,8 @@ export default function App(props){
           
           <Switch>
           <Grid className={classes.top}>
+          <Route exact path="/" render={(rp) => ( <Home {...rp}/>)}
+            />  
           <Route exact path="/login" render={(rp) => ( <Signin {...rp}/>)}
             />
             <Route exact path="/signup" render={(rp) => ( <Signup {...rp}/>)}

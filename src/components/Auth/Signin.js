@@ -71,7 +71,7 @@ const SignIn = (props) => {
             const {token, user} =userData;
             if(user){
             dispatch({type: "auth", payload: {token, username: user.username, user_id: user.id}})
-            window.localStorage.setItem("auth", JSON.stringify({token, username: user.username}))
+            window.localStorage.setItem("auth", JSON.stringify({token, username: user.username, user_id: user.id}))
             props.history.push(`/`)}
             else {
               setOpen(true)

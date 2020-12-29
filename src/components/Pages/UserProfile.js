@@ -162,6 +162,12 @@ const Profile = (props) => {
                     </Grid>
             
             </Grid>
+            <Grid container item xs={12}>
+                <Grid container item xs={6}> 
+                
+                </Grid>
+                
+            </Grid>            
         </Grid>
         <Grid item  sm={1}></Grid>
     </Grid>
