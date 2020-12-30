@@ -1,14 +1,17 @@
 import React from 'react';
-import ProfileInfo from '../Parts/Profile/ProfileInfo'
 import GameCard from '../Parts/Profile/GazeboSquare'
-import {Paper, Grid, Button, Card,CardContent,Slide, Typography,CircularProgress, Avatar, Divider,Tooltip,IconButton,Modal,Backdrop,Fade} from '@material-ui/core/';
+import GameInfo from '../Parts/Profile/gameInfo'
+import Drawer from '@material-ui/core/Drawer';
+import clsx from 'clsx';
+import {Paper, Grid, Button,List,Slide, Typography,CircularProgress, Avatar, Divider,Tooltip,IconButton,Modal,Backdrop,Fade,ListItem,ListItemIcon,ListItemText} from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
-import UserProfilePhoto from '../../images/profilepictest.png'
 import {useAppState} from '../../AppState.js'
 import { CenterFocusStrong } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
 import FormGS from '../Parts/Profile/FormGS'
 import Collage from '../../images/profile_backgrounds/collage.png'
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,6 +40,12 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+      },
+      list: {
+        width: 250,
+      },
+      fullList: {
+        width: 'auto',
       }
   }));
 
@@ -48,6 +57,7 @@ const Profile = (props) => {
     const userInfo = props.match.params.id
     const [profileData, setProfileData] = React.useState()
     const [gameCardData, setGameCardData] = React.useState()
+    const [gameData, setGameData] = React.useState()
     const [followedData, setFollowedData] = React.useState(false)
     const [followData, setFollowData] = React.useState(
         {
@@ -175,9 +185,39 @@ const Profile = (props) => {
         )
     }
 
+const [drawer, setDrawer] = React.useState(false);
+      
+const toggleDrawer = (open) => (event) => {
+          if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+          }
+          setDrawer(open);
+        };
+      
+        const list = () => (
+          <div
+            className={classes.list}
+            role="presentation"
+            onClick={toggleDrawer(false)}
+            onKeyDown={toggleDrawer(false)}
+          >
+           <h1> hi </h1> 
+          </div>
+        );
+
+React.useEffect(() => {
+            }, [gameData])
+
     return (
 
+
     <div className={classes.root}>
+
+    <Drawer anchor='left' open={drawer} onClose={toggleDrawer(false)}>
+                {<GameInfo gameData={gameData} />}
+    </Drawer>
+
+
     <Grid container justify='space-around' className={classes.grid} spacing={2}>
         <Grid item  sm={1}></Grid>
         <Grid container item direction= "column" xs={12} sm={10} spacing ={4}>
@@ -189,7 +229,8 @@ const Profile = (props) => {
             <Grid container item xs={12} alignItems="center" justify="center" spacing={3}>
                     {(gameCardData && profileData) ? gameCardData.map((card, index) => (
                         <Grid item xs={6} sm={4} lg={3}>
-                        <GameCard getGamerCards={getGamerCards} product ={card.product} screenname={card.screenname} username={profileData.username}currently_playing={card.currently_playing} index={index} id={card.id}/>
+                        <GameCard getGamerCards={getGamerCards} setDrawer={setDrawer}
+         setGameData={setGameData} toggleDrawer={toggleDrawer} product ={card.product} screenname={card.screenname} username={profileData.username}currently_playing={card.currently_playing} index={index} id={card.id}/>
                         </Grid>
                     )) : (<CircularProgress color="secondary" />)}
                     <Grid item xs={6} sm={4} lg={3}>

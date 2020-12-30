@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { DirectUpload } from 'activestorage';
-
+import {useHistory} from 'react-router-dom'
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -50,8 +50,10 @@ const useStyles = makeStyles((theme) => ({
 
 const BasicInfoFirst = (props) => {
 const {state, dispatch} = useAppState()
+const {history} = useHistory
 const {token} = state
 const classes = useStyles();
+const [done, setDone] = React.useState(false)
 const [formData, setFormData] = React.useState({
       pronoun: "",
       username: state.username,
@@ -97,9 +99,10 @@ const handleChange = (event) => {
       setFormData({...formData,[event.target.name]: event.target.value})
   }
 }
+
 const handleSubmit = (event) => {
   event.preventDefault()
-  return fetch(state.url + "/basic_user_infos",{
+   fetch(state.url + "/basic_user_infos",{
     method: "post",
     headers: {
         "Content-Type": "application/json",
@@ -116,8 +119,9 @@ const handleSubmit = (event) => {
       })
 })
 .then(response => response.json())
-.then(data => uploadFile(formData.image, data))
-console.log(formData.image)
+.then(data => uploadFile(formData.image, data)
+)
+props.history.push("/")
 }
   return (
     <Container component="main" maxWidth="xs">

@@ -47,8 +47,11 @@ const useStyles = makeStyles((theme)=> ({
     setEditOpen(false);
   };
 
-  const {product, screenname, index, currently_playing, id, getGamerCards, username} = props
-const type_of_name =(productType) => {
+ 
+ const {product, screenname, index, setGameData,setDrawer,
+    currently_playing, id, getGamerCards, username} = props
+
+ const type_of_name =(productType) => {
     if(productType == "Playstation")
         return "PSN"
     else if(productType =="Xbox")
@@ -58,7 +61,7 @@ const type_of_name =(productType) => {
     else if(productType =="Nintendo")
         return "NINTENDO ID"
     else if(productType =="BattleNet")
-        return "Username"
+        return "BattleNet ID"
     else if(productType =="Origin")
         return "Public ID"
     else if(productType =="Epic Games")
@@ -66,7 +69,6 @@ const type_of_name =(productType) => {
     else 
         return "OTHER"
 }
-
 const type_of_background =(productType) => {
     if(productType == "Playstation")
         return Playstation
@@ -85,7 +87,6 @@ const type_of_background =(productType) => {
     else
         return Other
 }
-
 const type_of_color =(productType) => {
     if(productType == "Playstation")
         return '#001d53'
@@ -95,7 +96,7 @@ const type_of_color =(productType) => {
         return "#1b2838"
     else if(productType =="Nintendo")
         return "#4B000E"
-        else if(productType =="BattleNet")
+    else if(productType =="BattleNet")
         return "#242A49"
     else if(productType =="Origin")
         return "#744714"
@@ -145,6 +146,11 @@ const editdeletButtons = () => {
     )
 }
 
+const GameSet = () => {
+    setGameData(currently_playing)
+    setDrawer(true)
+}
+
   return (
     <Grow in={true} timeout={1000+(index*500)}> 
     <Card className={classes.root}>
@@ -181,7 +187,7 @@ const editdeletButtons = () => {
         </List>
         <Grid container alignItems="flex-start" justify="flex-end" >
             <Grid item xs={12} sm={12}>
-            <Button variant="containted" size="small" >
+            <Button variant="containted" size="small" name={currently_playing} onClick={GameSet} >
                 more about {currently_playing}
             </Button>
             </Grid>

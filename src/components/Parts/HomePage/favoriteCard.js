@@ -16,7 +16,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     alignItems: 'center',
-    maxWidth: 150
+    maxWidth: 150,
+    marginTop: 10
   },
   details: {
     display: 'flex',
@@ -44,21 +45,17 @@ const FavoriteCard = (props) => {
   const history = useHistory(); 
 
   return (
-    <Grow in={true} timeout={1000+(index*1000)}>
-    <Card className={classes.root}>
+    <Grow in={true} timeout={1000+(index*500)}>
       <ButtonBase onClick={()=>{
         history.push(`/user/profile/${user_id}`)
       }}>
       <div className={classes.details}>
-        <CardContent className={classes.content} style={{ textAlign: 'center' }}>
           <Typography variant="subtitle1">
             {username}
           </Typography>
           <Avatar alt="Steven Ott" src={`${state.url}/${image}`} className={classes.large} />
-        </CardContent>
       </div>
     </ButtonBase>
-    </Card>
     </Grow>
   );
 }
