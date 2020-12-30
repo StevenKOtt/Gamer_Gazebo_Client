@@ -1,11 +1,7 @@
 import React from 'react';
-import GameCard from '../Parts/Profile/GazeboSquare'
 import {Paper, Grid, Container, Card,CardContent,Slide, Typography,CircularProgress, Avatar, Divider,Tooltip,IconButton,Modal,Backdrop,Fade} from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 import {useAppState} from '../../AppState.js'
-import AddIcon from '@material-ui/icons/Add';
-import Favorites from '../Parts/HomePage/favoritesBar'
-import Collage from '../../images/profile_backgrounds/collage.png'
 import {useHistory} from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
     root: {

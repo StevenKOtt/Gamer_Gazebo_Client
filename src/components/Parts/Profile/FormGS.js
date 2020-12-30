@@ -7,9 +7,6 @@ import {useAppState} from "../../../AppState.js"
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
-import PersonIcon from '@material-ui/icons/Person';
-import Playstation from './../../../images/Game_Card_Backgrounds/playstation.png'
 import GameCard from '../Profile/GazeboSquare'
 
 

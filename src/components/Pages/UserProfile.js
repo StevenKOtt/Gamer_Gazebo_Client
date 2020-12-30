@@ -3,15 +3,14 @@ import GameCard from '../Parts/Profile/GazeboSquare'
 import GameInfo from '../Parts/Profile/gameInfo'
 import Drawer from '@material-ui/core/Drawer';
 import clsx from 'clsx';
-import {Paper, Grid, Button,LinearProgress,Slide, Typography,CircularProgress, Avatar, Divider,Tooltip,IconButton,Modal,Backdrop,Fade} from '@material-ui/core/';
+import {Paper, Grid, Button,LinearProgress,Slide, Typography,CircularProgress, Avatar,Tooltip,IconButton,Modal,Backdrop,Fade} from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 import {useAppState} from '../../AppState.js'
 import { CenterFocusStrong } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
 import FormGS from '../Parts/Profile/FormGS'
 import Collage from '../../images/profile_backgrounds/collage.png'
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -224,9 +223,7 @@ React.useEffect(() => {
                     {specificGame ? (
                         <>
                         <Grid item sm={12}>
-                            <GameInfo specificGame={specificGame} photo={specificGame[0].background_image} name={specificGame[0].name} dominant_color ={specificGame[0].dominant_color} 
-                            genres = {specificGame[0].genres} metacritic = {specificGame[0].metacritic} id={specificGame[0].id}
-                             released={specificGame[0].released}rated={specificGame[0].esrb_rating}platforms ={specificGame[0].platforms} gameData={gameData}/>
+                            <GameInfo specificGame={specificGame}/>
                         </Grid> 
                         </>
                     ) : (<LinearProgress color="secondary" />)}
