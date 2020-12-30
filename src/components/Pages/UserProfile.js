@@ -19,14 +19,15 @@ const useStyles = makeStyles((theme) => ({
     paper: {
       padding: theme.spacing(1),
       color: theme.palette.text.primary,
-      background:theme.palette.secondary.dark,
+      background:theme.palette.primary.dark,
       marginTop: 10,
-      paddingBottom: 10
+      paddingBottom: 10,
 
     },
     paperComponents: {
         background: '#39203C',
-        padding: theme.spacing()
+        padding: theme.spacing(),
+        
     },
     grid: {
      marginTop: 15,
@@ -145,6 +146,7 @@ const Profile = (props) => {
       React.useLayoutEffect(()=> {
         checkFollow()
       }, [])
+
       React.useEffect(() => {
         getProfileInfo()
         getGamerCards()
@@ -216,7 +218,7 @@ React.useEffect(() => {
     return (
 
 
-    <div className={classes.root}>
+    <div className={classes.root} style={{height: '100vh'}}>
 
     <Drawer anchor='left' open={drawer} onClose={toggleDrawer(false)}>
                 {/* <Grid container direction ="column" alignItems="center"> */}

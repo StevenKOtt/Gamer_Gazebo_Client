@@ -79,6 +79,7 @@ const Header = (props) => {
   const {state, dispatch} = useAppState()
   const history = useHistory();
 
+
   const handleChange = (event) => {
     setSearchData({...searchData,[event.target.name]: event.target.value})
   }

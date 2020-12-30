@@ -5,6 +5,7 @@ import {useAppState} from '../../AppState.js'
 import Favorites from '../Parts/HomePage/favoritesBar'
 import Collage from '../../images/profile_backgrounds/collage.png'
 import SendIcon from '@material-ui/icons/Send';
+import ComingSoon from '../../images/ComingSoon.png'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -57,9 +58,9 @@ const Home = () => {
     <div className={classes.root}>      
     <Grid container justify="space-between" direction = "row" spacing={2}>
         {/* The Feed bar */}
-        
+        <Grid item sm={1}></Grid>
         <Slide in={'true'} direction={"right"} timeout={1200}>
-         <Grid container item direction ="column" xs={12} sm={9}>
+         <Grid container item direction ="column" xs={12} sm={7}>
          
             <Paper className={classes.paperComponents}>
                 <Grid item xs={12}>
@@ -83,18 +84,19 @@ const Home = () => {
                             </form>
                     </Grid>
                     <Grid item xs={2} alignItems="center" justify="center">
-                        <SendIcon />
+                        <SendIcon style={{marginTop: '40'}} />
                     </Grid>  
                 </Grid>
             </Paper> 
             </Paper>
 
             <Paper className={classes.paperComponents} style={{height: '100vh'}}>
-                <Grid container item xs={12} style={{marginTop: '30'}}>
-                            
-                            <Typography variant="h5" style={{textAlign: 'center'}}>
-                            
-                            </Typography>
+                <Grid item container justify='center' xs={12} style={{marginTop: '30'}}>
+                    <Grid item xs={3}></Grid>
+                    <Grid item xs={4}>
+                        <img src={ComingSoon} style={{marginTop: '30'}}/>
+                    </Grid>
+                    <Grid item xs={5}></Grid>
                 </Grid>
             </Paper>
             
@@ -119,6 +121,7 @@ const Home = () => {
         </Paper>                   
         </Grid>
         </Slide>
+        <Grid item sm={1}></Grid>
     </Grid>
     </div>
     )

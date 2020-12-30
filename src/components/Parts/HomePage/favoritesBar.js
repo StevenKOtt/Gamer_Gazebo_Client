@@ -48,7 +48,7 @@ const Favorites = (props) => {
 
   const getFollowInfo = async () => {
        const auth = JSON.parse(window.localStorage.getItem("auth"))
-       await fetch(`https://gamergazeboapi.herokuapp.com/follows/?user_id=${auth.user_id}`, {
+       await fetch(`http://localhost:3000/follows/?user_id=${auth.user_id}`, {
         headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": '*',

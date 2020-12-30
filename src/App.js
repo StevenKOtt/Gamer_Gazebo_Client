@@ -45,7 +45,8 @@ export default function App(props){
   const history = useHistory(); 
   const {state, dispatch} = useAppState()
   const {token} = state
-  React.useState(() => {
+
+  React.useEffect(() => {
     const auth = JSON.parse(window.localStorage.getItem("auth"))
     if (auth){
         dispatch({type: "auth", payload: auth})

@@ -88,7 +88,7 @@ const handleSubmit = async (event) => {
 
 
   return (
-    <Grid container item xs={10} alignItems="center" justify="center">
+    <Grid container item xs={10} alignItems="center" justify="center" spacing={2}>
       {/* Editing Card */}
       <Grid item xs={12} sm={6}>  
           <form onSubmit={handleSubmit}>

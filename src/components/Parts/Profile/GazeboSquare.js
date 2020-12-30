@@ -21,6 +21,7 @@ import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import PersonIcon from '@material-ui/icons/Person';
 import EditIcon from '@material-ui/icons/Edit';
 import FormGS from '../Profile/FormGS'
+import {useAppState} from '../../../AppState.js'
 
 const useStyles = makeStyles((theme)=> ({
   modal: {
@@ -35,7 +36,8 @@ const useStyles = makeStyles((theme)=> ({
   }
 }));
  const GameCard =(props) => {
-
+    const {state, dispatch} = useAppState()
+    const {token} = state
   const classes = useStyles();
   const [openEdit, setEditOpen] = React.useState(false);
 
@@ -47,6 +49,16 @@ const useStyles = makeStyles((theme)=> ({
     setEditOpen(false);
   };
 
+  const deleteGazeboSquare = async () => {
+    return await fetch(state.url + `/game_cards/${id}`,{
+      method: "delete",
+      headers: {
+          "Content-Type": "application/json",
+          Authorization: "bearer " + token
+      }
+  })
+}
+  
  
  const {product, screenname, index, setGameData,setDrawer,
     currently_playing, id, getGamerCards, username} = props
@@ -106,6 +118,10 @@ const type_of_color =(productType) => {
         return "#424242"
 
 }
+const deleteClicked = async () => {
+    await deleteGazeboSquare()
+    getGamerCards()
+}
 
 const editdeletButtons = () => {
     return (
@@ -137,7 +153,7 @@ const editdeletButtons = () => {
             </Grid>
             <Grid item item xs={2}>
             <Tooltip title="Delete">
-                <IconButton aria-label="delete">
+                <IconButton aria-label="delete" onClick={deleteClicked}>
                     <DeleteIcon />
                 </IconButton>
             </Tooltip>

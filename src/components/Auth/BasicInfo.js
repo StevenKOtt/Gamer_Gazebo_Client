@@ -2,7 +2,7 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import {TextField, MenuItem} from '@material-ui/core/';
+import {TextField, MenuItem, FormHelperText} from '@material-ui/core/';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import {useAppState} from "../../AppState.js"
@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    height: "100vh"
   },
   avatar: {
     margin: theme.spacing(1),
@@ -138,12 +139,13 @@ props.history.push("/")
             variant="outlined"
             margin="normal"
             fullWidth
+            required
             onChange={handleChange}
             name="image"
-            label="Profile_Picture"
             type="file"
             id="image"
           />
+          <FormHelperText id="image">Upload a Profile Photo</FormHelperText>
           <TextField
             variant="outlined"
             margin="normal"

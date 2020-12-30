@@ -34,8 +34,8 @@ const loaded =() => {
     )
 } 
 return (
-<Grid container>
-    <Grid item sm={2}>
+<Grid container style={{height: '100vh'}}>
+    <Grid item sm={1}>
     
     </Grid>
     <Grid container item sm={10} spacing={2}>
