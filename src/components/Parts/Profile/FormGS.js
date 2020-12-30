@@ -120,13 +120,13 @@ const handleSubmit = async (event) => {
             Nintendo
             </MenuItem>
             <MenuItem key="BattleNet" value="BattleNet">
-            Other
+            BattleNet
             </MenuItem>
             <MenuItem key="Origin" value="Origin">
-            Other
+            Origin
             </MenuItem>
             <MenuItem key="Epic Games" value="Epic Games">
-            Other
+            Epic Games
             </MenuItem>
             <MenuItem key="Other" value="Other">
             Other

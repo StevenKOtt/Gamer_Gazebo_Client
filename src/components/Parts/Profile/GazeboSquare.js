@@ -146,7 +146,7 @@ const editdeletButtons = () => {
 }
 
   return (
-    <Grow in={true} timeout={1000+(index*1000)}> 
+    <Grow in={true} timeout={1000+(index*500)}> 
     <Card className={classes.root}>
       <CardActionArea>
         <CardMedia
