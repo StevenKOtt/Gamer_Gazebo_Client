@@ -13,11 +13,15 @@ import Playstation from './../../../images/Game_Card_Backgrounds/playstation.png
 import Xbox from './../../../images/Game_Card_Backgrounds/xbox.png'
 import Nintendo from './../../../images/Game_Card_Backgrounds/nintendo.png'
 import Steam from './../../../images/Game_Card_Backgrounds/steam.png'
+import BattleNet from './../../../images/Game_Card_Backgrounds/Battlenet.jpg'
+import EpicGames from './../../../images/Game_Card_Backgrounds/epicgames.jpg'
+import Origin from './../../../images/Game_Card_Backgrounds/origin.jpg'
 import Other from './../../../images/Game_Card_Backgrounds/other.png'
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import PersonIcon from '@material-ui/icons/Person';
 import EditIcon from '@material-ui/icons/Edit';
 import FormGS from '../Profile/FormGS'
+
 const useStyles = makeStyles((theme)=> ({
   modal: {
     display: 'flex',
@@ -53,6 +57,12 @@ const type_of_name =(productType) => {
         return "STEAM ID"
     else if(productType =="Nintendo")
         return "NINTENDO ID"
+    else if(productType =="BattleNet")
+        return "Username"
+    else if(productType =="Origin")
+        return "Public ID"
+    else if(productType =="Epic Games")
+        return "Display Name"
     else 
         return "OTHER"
 }
@@ -66,6 +76,12 @@ const type_of_background =(productType) => {
         return Steam
     else if(productType =="Nintendo")
         return Nintendo
+    else if(productType =="BattleNet")
+        return BattleNet
+    else if(productType =="Origin")
+        return Origin
+    else if(productType =="Epic Games")
+        return EpicGames
     else
         return Other
 }
@@ -79,6 +95,12 @@ const type_of_color =(productType) => {
         return "#1b2838"
     else if(productType =="Nintendo")
         return "#4B000E"
+        else if(productType =="BattleNet")
+        return "#242A49"
+    else if(productType =="Origin")
+        return "#744714"
+    else if(productType =="Epic Games")
+        return "#24232F"
     else
         return "#424242"
 

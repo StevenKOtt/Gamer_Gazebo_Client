@@ -119,6 +119,15 @@ const handleSubmit = async (event) => {
             <MenuItem key="Nintendo" value="Nintendo">
             Nintendo
             </MenuItem>
+            <MenuItem key="BattleNet" value="BattleNet">
+            Other
+            </MenuItem>
+            <MenuItem key="Origin" value="Origin">
+            Other
+            </MenuItem>
+            <MenuItem key="Epic Games" value="Epic Games">
+            Other
+            </MenuItem>
             <MenuItem key="Other" value="Other">
             Other
             </MenuItem>
