@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -6,7 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
-import { ListItem, Grow, LinearProgress, ListItemAvatar, ListItemText,Divider, Avatar, Grid, Tooltip, IconButton,Backdrop,Fade, Modal} from '@material-ui/core/';
+import { ListItem, ListItemIcon, LinearProgress, Icon, ListItemText,List, Modal} from '@material-ui/core/';
 import DeleteIcon from '@material-ui/icons/Delete'
 import Typography from '@material-ui/core/Typography';
 import Playstation from './../../../images/Game_Card_Backgrounds/playstation.png'
@@ -17,10 +17,13 @@ import BattleNet from './../../../images/Game_Card_Backgrounds/Battlenet.jpg'
 import EpicGames from './../../../images/Game_Card_Backgrounds/epicgames.jpg'
 import Origin from './../../../images/Game_Card_Backgrounds/origin.jpg'
 import Other from './../../../images/Game_Card_Backgrounds/other.png'
-import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
-import PersonIcon from '@material-ui/icons/Person';
-import EditIcon from '@material-ui/icons/Edit';
-import FormGS from './FormGS'
+import VideogameAssetIcon from '@material-ui/icons/VideogameAsset';
+import PlaystationSVG from '../../../images/icons_svg/Playstation.svg'
+import XboxIcon from '../../../images/icons_svg/Xbox.png'
+import SwitchIcon from '../../../images/icons_svg/switch.png'
+import PCIcon from '../../../images/icons_svg/computer.png'
+import parse from 'html-react-parser';
+
 
 const useStyles = makeStyles((theme)=> ({
   modal: {
@@ -35,6 +38,7 @@ const useStyles = makeStyles((theme)=> ({
   }
   ,root: {
     maxWidth: 345,
+    bacgrkoundColor: '#0f0f0f'
   },
   media: {
     height: 140,
@@ -43,11 +47,39 @@ const useStyles = makeStyles((theme)=> ({
  
 
 const GameInfo =(props) => {
-
   const classes = useStyles();
-  const [specificGame, setSpecificGame] = React.useState()
+  const [specificGameDetails, setSpecificGameDetails] = React.useState()
+  const  {specificGame} = props
+
+
+  const gameDetails = async () => {
+    await fetch(`https://api.rawg.io/api/games/${specificGame[0].id}?key=d60c391b55cf416eb0d4e9f83c4a6a69`, {
+      headers: {
+      'Accept': 'application/json',
+      "Content-Type": "application/json",   
+      }})
+    .then((response) => response.json())
+    .then((data) => {
+      setSpecificGameDetails({
+        description: data.description,
+        website: data.website,
+        additional_photo: data.background_image_additional,
+        id: data.id
+      })
+      console.log(data)
+    });
+  };
+
+
+React.useEffect(() => {
+  if(specificGame[0].id != specificGame.id)
+    gameDetails()
+           }, [specificGame])
+
+
+
  
- const {index, gameData, id, getGamerCards, username} = props
+ 
 
 const type_of_background =(productType) => {
     if(productType == "Playstation")
@@ -87,64 +119,96 @@ const type_of_color =(productType) => {
 
 }
 
-const gameApiCall = async () => {
-     fetch(`https://api.rawg.io/api/games?key=d60c391b55cf416eb0d4e9f83c4a6a69&search=${gameData}&page_size=2&page=1&search_precise=true`, {
-        headers: {
-        'Accept': 'application/json',
-        "Content-Type": "application/json",   
-        }})
-      .then((response) => response.json())
-      .then((data) => {
-        setSpecificGame(data)
-        console.log(data)
-      });
-  };
 
-  React.useEffect(() => {
-    gameApiCall()
-  }, [gameData])
-
-const loaded = () => {
+  const getSymbol = (name) => {
+   if (name === "PlayStation" || name == "PlayStation 2" || name == "PlayStation 3" || name == "PlayStation 4" || name == "PlayStation 5")
+    {
+      return ( 
+      <Icon>
+        <img src={PlaystationSVG} height={25} width={25}/>
+      </Icon>)
+    }
+    else if (name === "Xbox One" || name === "Xbox" || name === "Xbox 360") {
       return (
-        <Grid item xs={12}>
-          <Card className={classes.root}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          className={classes.media}
-          src={specificGame.results[0].background_image}
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
-    </Card>
-        </Grid>
-      )
-}
+        <Icon>
+          <img src={XboxIcon} height={25} width={25}/>
+        </Icon>)
+    }
+    else if (name === "Nintendo Switch" || name === "Switch") {
+      return (
+        <Icon>
+          <img src={SwitchIcon} height={25} width={25}/>
+        </Icon>)
+    }
+    else if (name === "PC" || name === "macOS") {
+      return (
+        <Icon>
+          <img src={PCIcon} height={25} width={25}/>
+        </Icon>)
+    }
+    else {
+        return (<VideogameAssetIcon />)
+      }
+   
+  }
+  
   return (
-
-    <Grow in={true} timeout={1000+(index*500)}> 
-    <Grid container direction="column" alignItems="center">
-        {specificGame ? loaded() : <LinearProgress color="secondary" />}
-    </Grid>
-
-    </Grow>
+    <Card className={classes.root}>
+    <CardActionArea onClick={()=> window.open(specificGameDetails.website, "_blank") }>
+    <CardMedia
+    component="img"
+    className={classes.media}
+    src={specificGame[0].background_image}
+  />
+  <CardContent>
+    <Typography gutterBottom variant="h3" component="h2">
+      {specificGame[0].name}
+    </Typography>
+    <Typography gutterBottom variant="h6" component="h2">
+      Metacritic: {specificGame[0].metacritic}
+    </Typography>
+    <Typography varivnt="body2" color="textSecondary" component="p">
+      {specificGameDetails ? parse(specificGameDetails.description) : (<LinearProgress color="secondary" />)}
+    </Typography>
+    <Typography gutterBottom variant="h5" component="h2">
+      Platforms:
+      </Typography>
+    <List dense='true'>
+      {specificGame[0].platforms ? specificGame[0].platforms.map((platform)=>(
+        <ListItem>
+        <ListItemIcon>
+          {getSymbol(platform.platform.name)}
+        </ListItemIcon>
+        <ListItemText
+          primary={platform.platform.name}
+        />
+      </ListItem>
+      )) : (<LinearProgress color="secondary" />)}
+   </List>
+    <Typography gutterBottom variant="h5" component="h2">
+      Genres:
+      </Typography>
+      <List dense={true}>
+      {specificGame[0].genres ? specificGame[0].genres.map((genre) => (
+         <ListItem>
+         <ListItemText
+           primary={genre.name}
+         />
+         </ListItem>
+      )) : (<LinearProgress color="secondary" />) }
+      </List>
+    <Typography gutterBottom variant="h5" component="h2">
+    </Typography>
+    <Typography gutterBottom variant="h5" component="h2">
+    </Typography>
+  </CardContent>
+  {specificGameDetails ? (<CardMedia
+    component="img"
+    className={classes.media}
+    src={specificGameDetails.additional_photo}
+  />) : (<LinearProgress color="secondary" />)}
+</CardActionArea>
+</Card>
     
   );
 }

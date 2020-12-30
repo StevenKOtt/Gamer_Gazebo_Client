@@ -50,8 +50,9 @@ const Home = () => {
     const {token} = state
     const [checked, setChecked] = React.useState(false);
 
-
-
+    React.useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
 
     return (
 

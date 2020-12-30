@@ -3,7 +3,7 @@ import GameCard from '../Parts/Profile/GazeboSquare'
 import GameInfo from '../Parts/Profile/gameInfo'
 import Drawer from '@material-ui/core/Drawer';
 import clsx from 'clsx';
-import {Paper, Grid, Button,List,Slide, Typography,CircularProgress, Avatar, Divider,Tooltip,IconButton,Modal,Backdrop,Fade,ListItem,ListItemIcon,ListItemText} from '@material-ui/core/';
+import {Paper, Grid, Button,LinearProgress,Slide, Typography,CircularProgress, Avatar, Divider,Tooltip,IconButton,Modal,Backdrop,Fade} from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 import {useAppState} from '../../AppState.js'
 import { CenterFocusStrong } from '@material-ui/icons';
@@ -58,6 +58,7 @@ const Profile = (props) => {
     const [profileData, setProfileData] = React.useState()
     const [gameCardData, setGameCardData] = React.useState()
     const [gameData, setGameData] = React.useState()
+    const [specificGame, setSpecificGame] = React.useState()
     const [followedData, setFollowedData] = React.useState(false)
     const [followData, setFollowData] = React.useState(
         {
@@ -129,6 +130,19 @@ const Profile = (props) => {
           });
       };
 
+      const gameApiCall = () => {
+        fetch(`https://api.rawg.io/api/games?key=d60c391b55cf416eb0d4e9f83c4a6a69&search=${gameData}&page_size=1&page=1&search_precise=true`, {
+          headers: {
+          'Accept': 'application/json',
+          "Content-Type": "application/json",   
+          }})
+        .then((response) => response.json())
+        .then((data) => {
+          setSpecificGame(data.results)
+          console.log(data)
+        });
+    };
+
       React.useLayoutEffect(()=> {
         checkFollow()
       }, [])
@@ -160,13 +174,15 @@ const Profile = (props) => {
                     {profileData.username}
                 </Typography>
             </Grid>
-            <Grid item xs={12}>
+
+           {JSON.parse(window.localStorage.getItem('auth')).user_id != userInfo ? ( 
+            <Grid item xs={12}> 
             {followedData ? (<Button variant="contained" onClick={changeFollow} color="primary">
                         UnFollow
                     </Button>) : (<Button variant="contained" onClick={changeFollow} color="secondary">
                         Follow
                     </Button>)}
-            </Grid>
+            </Grid> ) : null }
             <Grid item xs={12}>
                     <Typography variant="button">
                         PRONOUNS: <Typography variant="body2" display="inline">
@@ -186,26 +202,16 @@ const Profile = (props) => {
     }
 
 const [drawer, setDrawer] = React.useState(false);
-      
+
 const toggleDrawer = (open) => (event) => {
           if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
           }
           setDrawer(open);
         };
-      
-        const list = () => (
-          <div
-            className={classes.list}
-            role="presentation"
-            onClick={toggleDrawer(false)}
-            onKeyDown={toggleDrawer(false)}
-          >
-           <h1> hi </h1> 
-          </div>
-        );
 
 React.useEffect(() => {
+     gameApiCall()
             }, [gameData])
 
     return (
@@ -214,7 +220,17 @@ React.useEffect(() => {
     <div className={classes.root}>
 
     <Drawer anchor='left' open={drawer} onClose={toggleDrawer(false)}>
-                {<GameInfo gameData={gameData} />}
+                {/* <Grid container direction ="column" alignItems="center"> */}
+                    {specificGame ? (
+                        <>
+                        <Grid item sm={12}>
+                            <GameInfo specificGame={specificGame} photo={specificGame[0].background_image} name={specificGame[0].name} dominant_color ={specificGame[0].dominant_color} 
+                            genres = {specificGame[0].genres} metacritic = {specificGame[0].metacritic} id={specificGame[0].id}
+                             released={specificGame[0].released}rated={specificGame[0].esrb_rating}platforms ={specificGame[0].platforms} gameData={gameData}/>
+                        </Grid> 
+                        </>
+                    ) : (<LinearProgress color="secondary" />)}
+                {/* </Grid> */}
     </Drawer>
 
 
@@ -234,11 +250,14 @@ React.useEffect(() => {
                         </Grid>
                     )) : (<CircularProgress color="secondary" />)}
                     <Grid item xs={6} sm={4} lg={3}>
-                    <Tooltip title="Add">
+                   
+            {JSON.parse(window.localStorage.getItem('auth')).user_id == userInfo ?
+
+                   ( <Tooltip title="Add">
                         <IconButton aria-label="add" onClick={handleNewOpen} style={{ fontSize: 50 }}>
                             <AddIcon />
                         </IconButton>
-                    </Tooltip>
+                    </Tooltip> ) : null}
                     <Modal
                     className={classes.modal}
                     open={openNew}

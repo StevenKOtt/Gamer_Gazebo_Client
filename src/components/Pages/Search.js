@@ -38,7 +38,7 @@ return (
     <Grid item sm={2}>
     
     </Grid>
-    <Grid item container sm={10} spacing={2}>
+    <Grid container item sm={10} spacing={2}>
 
             {searchResults ? searchResults.map((user, index) => (
             <Grid item sm={6}>

@@ -2,12 +2,8 @@ import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import {CardMedia, ButtonBase, Grow, Avatar} from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
+import {CardMedia, CardActionArea, Grow,Grid, Avatar} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
 import {useHistory} from 'react-router-dom'
 import {useAppState} from '../../../AppState.js'
 
@@ -54,37 +50,38 @@ const UserCard = (props) => {
   return (
     <Grow in={true} timeout={1000+(index*1000)}>
     <Card className={classes.root}>
-      <ButtonBase onClick={()=>{
+      <CardActionArea onClick={()=>{
         history.push(`/user/profile/${user_id}`)
       }}>
       <div className={classes.details}>
         <CardContent className={classes.content}>
-          <Typography component="h5" variant="h5">
-            {username}
-          </Typography>
-          <Avatar alt="Steven Ott" src={`${state.url}/${image}`} className={classes.large} />
-          <Typography variant="subtitle1" color="textSecondary">
-            {about_me}
-          </Typography>
+        <Grid container>
+          <Grid container item direction="column">
+            <Grid item xs={12}>
+              <Typography component="h5" variant="h5">
+                {username}
+              </Typography>
+            </Grid>
+            <Grid container item xs={12}>
+              <Grid item xs={4}>
+              <Avatar alt="Steven Ott" src={`${state.url}/${image}`} className={classes.large} />
+              </Grid>
+              <Grid item xs={8}>
+              <Typography variant="subtitle1" color="textSecondary">
+                  {about_me}
+              </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
         </CardContent>
-        {/* <div className={classes.controls}>
-          <IconButton aria-label="previous">
-            {theme.direction === 'rtl' ? <SkipNextIcon /> : <SkipPreviousIcon />}
-          </IconButton>
-          <IconButton aria-label="play/pause">
-            <PlayArrowIcon className={classes.playIcon} />
-          </IconButton>
-          <IconButton aria-label="next">
-            {theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
-          </IconButton>
-        </div> */}
       </div>
       <CardMedia
         className={classes.cover}
         image="/static/images/cards/live-from-space.jpg"
         title="Live from space album cover"
       />
-    </ButtonBase>
+    </CardActionArea>
     </Card>
     </Grow>
   );
