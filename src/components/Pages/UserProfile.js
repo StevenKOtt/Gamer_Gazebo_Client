@@ -1,7 +1,7 @@
 import React from 'react';
 import ProfileInfo from '../Parts/Profile/ProfileInfo'
 import GameCard from '../Parts/Profile/GazeboSquare'
-import {Paper, Grid, Card,CardContent,Slide, Typography,CircularProgress, Avatar, Divider,Tooltip,IconButton,Modal,Backdrop,Fade} from '@material-ui/core/';
+import {Paper, Grid, Button, Card,CardContent,Slide, Typography,CircularProgress, Avatar, Divider,Tooltip,IconButton,Modal,Backdrop,Fade} from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 import UserProfilePhoto from '../../images/profilepictest.png'
 import {useAppState} from '../../AppState.js'
@@ -48,6 +48,52 @@ const Profile = (props) => {
     const userInfo = props.match.params.id
     const [profileData, setProfileData] = React.useState()
     const [gameCardData, setGameCardData] = React.useState()
+    const [followedData, setFollowedData] = React.useState(false)
+    const [followData, setFollowData] = React.useState(
+        {
+            user_id: state.user_id,
+            following: userInfo
+        }
+    )
+
+
+    const checkFollow = async () => {
+        await fetch(state.url + `/followings/check/?user_id=${state.user_id}&follow_id=${userInfo}`,{
+            method: "get",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "bearer " + token
+            },
+        })
+        .then(response => response.json())
+        .then((data) => {
+            if(data.status == true) {
+                setFollowedData(true)
+            }
+            else {
+                setFollowedData(false)
+            }
+                })
+    }
+    const changeFollow = async () => {
+        await fetch(state.url + `/followings/update/?user_id=${state.user_id}&follow_id=${userInfo}`,{
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "bearer " + token
+            },
+            body: JSON.stringify(followData)
+        })
+        .then(response => response.json())
+        .then((data) => {
+            if(data.action == 'added') {
+                setFollowedData(true)
+            }
+            else {
+                setFollowedData(false)
+            }
+                })
+    }
 
     const getProfileInfo = async () => {
         return fetch(`${state.url}/basic_user_infos/${userInfo}`, {
@@ -73,9 +119,13 @@ const Profile = (props) => {
           });
       };
 
+      React.useLayoutEffect(()=> {
+        checkFollow()
+      }, [])
       React.useEffect(() => {
         getProfileInfo()
         getGamerCards()
+        
       }, [userInfo])
       const [openNew, setNewOpen] = React.useState(false);
 
@@ -99,6 +149,13 @@ const Profile = (props) => {
                 <Typography variant="h3">
                     {profileData.username}
                 </Typography>
+            </Grid>
+            <Grid item xs={12}>
+            {followedData ? (<Button variant="contained" onClick={changeFollow} color="primary">
+                        UnFollow
+                    </Button>) : (<Button variant="contained" onClick={changeFollow} color="secondary">
+                        Follow
+                    </Button>)}
             </Grid>
             <Grid item xs={12}>
                     <Typography variant="button">

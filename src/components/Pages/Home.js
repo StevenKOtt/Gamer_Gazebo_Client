@@ -4,7 +4,7 @@ import {Paper, Grid, Container, Card,CardContent,Slide, Typography,CircularProgr
 import { makeStyles } from '@material-ui/core/styles';
 import {useAppState} from '../../AppState.js'
 import AddIcon from '@material-ui/icons/Add';
-import FormGS from '../Parts/Profile/FormGS'
+import Favorites from '../Parts/HomePage/favoritesBar'
 import Collage from '../../images/profile_backgrounds/collage.png'
 
 const useStyles = makeStyles((theme) => ({
@@ -42,11 +42,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
     const classes = useStyles();
+    const {state, dispatch} = useAppState()
+    const {token} = state
+    const [checked, setChecked] = React.useState(false);
 
 
-    const loaded = () => {
-       
-    }
+
 
     return (
 
@@ -77,8 +78,14 @@ const Home = () => {
                             Favorites
                         </Typography>
                 </Grid>
+                <Grid item xs={12}>
+                    <Divider orientation="horizontal" flexItem />
+                </Grid>
+                <Grid container item xs={12} spacing={3} justify="center" alignItems="center">
+                    <Favorites />
+                </Grid>
                 <Divider orientation="horizontal" flexItem />
-                
+
             </Paper>                   
             </Grid>
     </Grid>

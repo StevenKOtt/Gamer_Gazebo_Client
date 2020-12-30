@@ -7,6 +7,7 @@ import Signin from './components/Auth/Signin'
 import Signup from './components/Auth/Signup'
 import Profile from './components/Pages/UserProfile'
 import Home from './components/Pages/Home'
+import Loading from './components/Pages/Loading'
 import Search from './components/Pages/Search'
 import BasicInfoFirst from './components/Auth/BasicInfo'
 import { Route, Link, Switch } from "react-router-dom";
@@ -43,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 export default function App(props){
   const history = useHistory(); 
   const {state, dispatch} = useAppState()
+  const {token} = state
   React.useState(() => {
     const auth = JSON.parse(window.localStorage.getItem("auth"))
     if (auth){
@@ -58,6 +60,8 @@ export default function App(props){
     keyword: "",
     setkeyword: ""
   })
+
+
   return (
     <ThemeProvider theme={theme}>
       <Paper style={{background: '#18191A'}}>
@@ -69,8 +73,8 @@ export default function App(props){
           
           <Switch>
           <Grid className={classes.top}>
-          <Route exact path="/" render={(rp) => ( <Home {...rp}/>)}
-            />  
+          <Route exact path="/" render={(rp) => ( <Home {...rp}/>)}/>
+          <Route exact path="/loading" render={(rp) => ( <Loading {...rp}/>)}/>
           <Route exact path="/login" render={(rp) => ( <Signin {...rp}/>)}
             />
             <Route exact path="/signup" render={(rp) => ( <Signup {...rp}/>)}
