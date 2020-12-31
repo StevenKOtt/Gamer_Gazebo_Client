@@ -160,7 +160,7 @@ props.history.push("/")
             type="file"
             id="image"
           />
-          <FormHelperText id="image">Upload a Profile Photo</FormHelperText>
+          <FormHelperText id="image">Upload a Profile Photo *required*</FormHelperText>
           <TextField
             variant="outlined"
             margin="normal"
