@@ -48,6 +48,7 @@ const Favorites = (props) => {
 
   const getFollowInfo = async () => {
        const auth = JSON.parse(window.localStorage.getItem("auth"))
+       if(auth != null) {
        await fetch(`https://gamergazeboapi.herokuapp.com/follows/?user_id=${auth.user_id}`, {
         headers: {
         "Content-Type": "application/json",
@@ -57,7 +58,7 @@ const Favorites = (props) => {
         .then((data) => {
             setFavoriteResults(data)
                 })
-    }
+    }}
 
 React.useEffect(() => {
       getFollowInfo()

@@ -26,7 +26,7 @@ const reducer = (state, action) => {
                 return newState
                 break;
             case "logout":
-                newState = {...state, token: null, username: null}
+                newState = {...state, token: null, username: null, user_id: 0}
                 window.localStorage.removeItem("auth")
                 return newState;
                 break;

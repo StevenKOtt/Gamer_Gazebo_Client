@@ -1,7 +1,7 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import {IconButton, Grid, Button} from '@material-ui/core/';
+import {IconButton, Grid, Button, Link} from '@material-ui/core/';
 import Typography from '@material-ui/core/Typography';
 import {useAppState} from '../AppState.js'
 import InputBase from '@material-ui/core/InputBase';
@@ -9,8 +9,8 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import {AccountCircle} from '@material-ui/icons';
 import SearchIcon from '@material-ui/icons/Search';
 import Logo from '../images/gazebo.png'
-import { Link, Redirect, useHistory } from "react-router-dom"
-
+import {Redirect, useHistory } from "react-router-dom"
+import { Link as RouterLink } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -89,8 +89,9 @@ const Header = (props) => {
         <Toolbar>
           <Grid container justify="space-between" alignItems="center">
             <Grid item sm={2} md={1} lg={1}>
-            {}
-           <Link to="/"> <img className={classes.name} src={Logo}/></Link>
+
+          {state.user_id != 0 ? (<Link to="/" component={RouterLink}><img className={classes.name} src={Logo}/></Link>) : (<Link to="/login" component={RouterLink}><img className={classes.name} src={Logo}/></Link>)}    
+           
             </Grid>
             <Grid item sm={3}>
             <div className={classes.search}>
@@ -122,10 +123,10 @@ const Header = (props) => {
             <div>
            {!state.token ? (
             <>
-               <Button variant="contained" component={Link} to={'/login'} color="success">
+               <Button variant="contained" component={RouterLink} to={'/login'} color="success">
                   Login
               </Button>
-              <Button variant="contained" color="secondary" component={Link} to={'/signup'}>
+              <Button variant="contained" color="secondary" component={RouterLink} to={'/signup'}>
                   Sign-Up
               </Button></>):(
               <><IconButton
@@ -133,11 +134,11 @@ const Header = (props) => {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 color="inherit"
-                component={Link} to={`/user/profile/${state.user_id}`}
+                component={RouterLink} to={`/user/profile/${state.user_id}`}
               >
                 <AccountCircle/>
               </IconButton>
-              <Button variant="contained" component={Link} to={'/login'} color="secondary" onClick={()=> {
+              <Button variant="contained" component={RouterLink} to={'/login'} color="secondary" onClick={()=> {
         dispatch({type: "logout"})
       }}>
                   Log-Out
