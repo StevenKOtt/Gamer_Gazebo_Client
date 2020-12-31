@@ -3,7 +3,7 @@ import GameCard from '../Parts/Profile/GazeboSquare'
 import GameInfo from '../Parts/Profile/gameInfo'
 import Drawer from '@material-ui/core/Drawer';
 import clsx from 'clsx';
-import {Paper, Grid, Button,LinearProgress,Slide, Typography,CircularProgress, Avatar,Tooltip,IconButton,Modal,Backdrop,Fade} from '@material-ui/core/';
+import {Paper, Grid, Button,LinearProgress,Slide, Typography,CircularProgress, Avatar,Tooltip,Fab,Modal,Backdrop,Fade} from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 import {useAppState} from '../../AppState.js'
 import { CenterFocusStrong } from '@material-ui/icons';
@@ -24,6 +24,11 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: 10,
 
     },
+    absolute: {
+    position: 'absolute',
+    bottom: theme.spacing(2),
+    right: theme.spacing(3),
+  },
     paperComponents: {
         background: '#39203C',
         padding: theme.spacing(),
@@ -232,7 +237,6 @@ React.useEffect(() => {
                 {/* </Grid> */}
     </Drawer>
 
-
     <Grid container justify='space-around' className={classes.grid} spacing={2}>
         <Grid item  sm={1}></Grid>
         <Grid container item direction= "column" xs={12} sm={10} spacing ={4}>
@@ -253,9 +257,10 @@ React.useEffect(() => {
             {JSON.parse(window.localStorage.getItem('auth')).user_id == userInfo ?
 
                    ( <Tooltip title="Add">
-                        <IconButton aria-label="add" onClick={handleNewOpen} style={{ fontSize: 50 }}>
+                        <Fab aria-label="add" onClick={handleNewOpen} className={classes.absolute} style={{ fontSize: 20 }} variant="extended">
                             <AddIcon />
-                        </IconButton>
+                            Add a Game Card
+                        </Fab>
                     </Tooltip> ) : null}
                     <Modal
                     className={classes.modal}

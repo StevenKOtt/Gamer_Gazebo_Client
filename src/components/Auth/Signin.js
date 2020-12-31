@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    height: "100vh"
+    height: "100vh",
   },
   avatar: {
     margin: theme.spacing(1),
@@ -167,7 +167,7 @@ const handleSubmit = (event) => {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2"  className = {classes.text}>
+              <Link to="/signup" variant="body2"  className = {classes.text}>
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

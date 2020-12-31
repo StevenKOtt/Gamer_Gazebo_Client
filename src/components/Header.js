@@ -89,6 +89,7 @@ const Header = (props) => {
         <Toolbar>
           <Grid container justify="space-between" alignItems="center">
             <Grid item sm={2} md={1} lg={1}>
+            {}
            <Link to="/"> <img className={classes.name} src={Logo}/></Link>
             </Grid>
             <Grid item sm={3}>
@@ -136,7 +137,7 @@ const Header = (props) => {
               >
                 <AccountCircle/>
               </IconButton>
-              <Button variant="contained" component={Link} to={'/'} color="secondary" onClick={()=> {
+              <Button variant="contained" component={Link} to={'/login'} color="secondary" onClick={()=> {
         dispatch({type: "logout"})
       }}>
                   Log-Out
