@@ -112,6 +112,15 @@ const handleSubmit = (event) => {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      <Grid container direction="column" alignItems="align">
+        <Grid item xs={12} style={{textAlign: 'center'}}>
+
+        <Typography variant="h6">
+          Welcome to Gamer Gazebo created by Steven Ott. Here, you can create a small profile, add some game cards with your gamer names and then search for other gamer profiles.
+        </Typography>
+
+        </Grid>
+      </Grid>
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
