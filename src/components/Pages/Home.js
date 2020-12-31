@@ -110,8 +110,8 @@ const Home = () => {
         <Paper className={classes.paperComponents} style={{height: '100vh', backgroundImage: `url(${Collage})`}}>
             <Paper>
             <Grid item xs={12} alignItems="center" className={classes.columns}>
-                    <Typography variant="h5"style={{textAlign: 'center'}}>
-                            Who are you following?
+                    <Typography variant="h5" style={{textAlign: 'center'}}>
+                           People you follow
                     </Typography>       
             </Grid>
             </Paper>

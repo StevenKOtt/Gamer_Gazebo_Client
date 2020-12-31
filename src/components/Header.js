@@ -100,7 +100,7 @@ const Header = (props) => {
             <SearchIcon /> 
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder="Search gamers"
               name="keyword"
               onChange={handleChange}
               classes={{

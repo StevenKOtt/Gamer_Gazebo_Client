@@ -3,12 +3,19 @@ import {Paper, Grid, Card,CardContent, Typography, Container, CircularProgress} 
 import {useAppState} from '../../AppState.js'
 import UserCard from '../Parts/SearchBlocks/UserCard'
 import { makeStyles } from '@material-ui/core/styles';
+import Collage from '../../images/profile_backgrounds/collage.png'
+import Controllers from '../../images/profile_backgrounds/controllers.jpg'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-    backgroundColor: theme.palette.primary.dark,
-      height: "100vh"
-    },
+    backgroundColor: '#182611',
+      height: "100vh",
+      backgroundImage: `url(${Collage})`
+    },paper2: {
+        backgroundColor: theme.palette.secondary.dark,
+          height: "100vh",
+          backgroundImage: `url(${Controllers})`
+        },
     avatar: {
       margin: theme.spacing(1),
       backgroundColor: theme.palette.primary.main
@@ -52,24 +59,22 @@ const loaded =() => {
 return (
 
 <Container>
-<Paper className={classes.paper}>
-    <Grid container item xs={12} >
-        <Grid item sm={2}></Grid>
+    <Grid container xs={12} className={classes.paper} justify="space-between" >
+        <Grid item sm={1}><Paper  className={classes.paper2}/></Grid>
+     
     
-    
-        <Grid container item sm={8} spacing={2} justify="center">
+        <Grid container item sm={10} spacing={2} justify="center">
 
             {searchResults ? searchResults.map((user, index) => (
-            <Grid item sm={6} style={{maxheight: '100'}} >
+            <Grid item sm={4} style={{maxheight: '100'}} >
             <UserCard checked={checked} index={index} image={user.image} username={user.username} pronoun={user.pronoun} user_id={user.user_id} about_me={user.about_me}/></Grid>
             )) : (<CircularProgress color="secondary" />)}
         
         </Grid>
 
-        <Grid item sm={2}></Grid>
+        <Grid item sm={1}><Paper  className={classes.paper2}/></Grid>
 
-    </Grid>
-</Paper>    
+    </Grid>   
 </Container>
 
 

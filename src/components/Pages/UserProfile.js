@@ -2,14 +2,15 @@ import React from 'react';
 import GameCard from '../Parts/Profile/GazeboSquare'
 import GameInfo from '../Parts/Profile/gameInfo'
 import Drawer from '@material-ui/core/Drawer';
-import clsx from 'clsx';
-import {Paper, Grid, Button,LinearProgress,Slide, Typography,CircularProgress, Avatar,Tooltip,Fab,Modal,Backdrop,Fade} from '@material-ui/core/';
+import {Paper, Grid, Button,LinearProgress,Slide,CssBaseline,Container, Typography,CircularProgress, Avatar,Tooltip,Fab,Modal,Backdrop,Fade} from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 import {useAppState} from '../../AppState.js'
-import { CenterFocusStrong } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
 import FormGS from '../Parts/Profile/FormGS'
 import Collage from '../../images/profile_backgrounds/collage.png'
+import Collage2 from '../../images/profile_backgrounds/collage2.jpg'
+import Curves from '../../images/profile_backgrounds/curves.jpg'
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(1),
       color: theme.palette.text.primary,
       background:theme.palette.primary.dark,
+      backgroundImage: `url(${Curves})`,
       marginTop: 10,
       paddingBottom: 10,
 
@@ -66,6 +68,7 @@ const Profile = (props) => {
     const [profileData, setProfileData] = React.useState()
     const [gameCardData, setGameCardData] = React.useState()
     const [gameData, setGameData] = React.useState()
+    const [randomBackground,setRandomBackground] = React.useState()
     const [specificGame, setSpecificGame] = React.useState()
     const [followedData, setFollowedData] = React.useState(false)
     const [followData, setFollowData] = React.useState(
@@ -74,8 +77,20 @@ const Profile = (props) => {
             following: userInfo
         }
     )
+
+
+const rand_Background =() =>{
+    const rand = Math.floor(Math.random() * 10)
+    if (rand%2 == 0) {
+         setRandomBackground(Collage)
+    }
+    else {
+        setRandomBackground(Collage2)
+    }
+}   
     React.useEffect(() => {
   window.scrollTo(0, 0)
+  rand_Background()
 }, [])
 
 
@@ -227,27 +242,15 @@ React.useEffect(() => {
             }, [gameData])
 
     return (
-
-
-    <div className={classes.root} style={{height: '100vh'}}>
-
-    <Drawer anchor='left' open={drawer} onClose={toggleDrawer(false)}>
-                {/* <Grid container direction ="column" alignItems="center"> */}
-                    {specificGame ? (
-                        <>
-                        <Grid item sm={12}>
-                            <GameInfo specificGame={specificGame}/>
-                        </Grid> 
-                        </>
-                    ) : (<LinearProgress color="secondary" />)}
-                {/* </Grid> */}
-    </Drawer>
-
+    <React.Fragment>    
+    <CssBaseline />    
+    <Container className={classes.root}>
+    <Paper className={classes.paper}>
     <Grid container justify='space-around' className={classes.grid} spacing={2}>
         <Grid item  sm={1}></Grid>
         <Grid container item direction= "column" xs={12} sm={10} spacing ={4}>
             <Slide in={'true'} direction={"right"} timeout={500}>
-            <Paper className = {classes.paperComponents} elevation={6} style={{backgroundImage: `url(${Collage})`}}>
+            <Paper className = {classes.paperComponents} elevation={6} style={{backgroundImage: `url(${randomBackground})`}}>
             {profileData ? loaded():(<CircularProgress color="secondary" />)}
             </Paper>
             </Slide>
@@ -299,7 +302,21 @@ React.useEffect(() => {
                         </Grid>
                     </Fade>
             </Modal>
-    </div>
+
+            <Drawer anchor='left' open={drawer} onClose={toggleDrawer(false)}>
+                {/* <Grid container direction ="column" alignItems="center"> */}
+                    {specificGame ? (
+                        <>
+                        <Grid item sm={12}>
+                            <GameInfo specificGame={specificGame}/>
+                        </Grid> 
+                        </>
+                    ) : (<LinearProgress color="secondary" />)}
+                {/* </Grid> */}
+            </Drawer>
+            </Paper>                   
+    </Container>
+    </React.Fragment>
     )
 }
 

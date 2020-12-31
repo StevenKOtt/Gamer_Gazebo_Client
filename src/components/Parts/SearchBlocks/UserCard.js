@@ -48,7 +48,7 @@ const UserCard = (props) => {
   const history = useHistory(); 
 
   return (
-    <Grow in={true} timeout={1000+(index*1000)}>
+    <Grow in={true} timeout={1000+(index*300)}>
     <Card className={classes.root}>
       <CardActionArea onClick={()=>{
         history.push(`/user/profile/${user_id}`)
@@ -56,7 +56,7 @@ const UserCard = (props) => {
       <div className={classes.details}>
         <CardContent className={classes.content}>
         <Grid container>
-          <Grid container item direction="column">
+          <Grid container item direction="column" xs={12}>
             <Grid item xs={12}>
               <Typography component="h5" variant="h5">
                 {username}
@@ -66,7 +66,8 @@ const UserCard = (props) => {
               <Grid item xs={4}>
               <Avatar alt="Steven Ott" src={`${state.url}/${image}`} className={classes.large} />
               </Grid>
-              <Grid item xs={8}>
+              <Grid item xs={1}></Grid>
+              <Grid item xs={7}>
               <Typography variant="subtitle1" color="textSecondary">
                   {about_me}
               </Typography>

@@ -45,7 +45,7 @@ const FavoriteCard = (props) => {
       <ButtonBase onClick={()=>{
         history.push(`/user/profile/${user_id}`)
       }}>
-      <div className={classes.details}>
+      <div className={classes.details}  style={{marginTop: '10px'}}>
           <Typography variant="subtitle1">
             {username}
           </Typography>

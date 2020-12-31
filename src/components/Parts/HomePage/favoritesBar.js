@@ -64,13 +64,24 @@ React.useEffect(() => {
       getFollowInfo()
 }, [])
 
+// check_followers = () => {
+//   if(favoritesResults.length == 0) {
+//     return <Typography variant="subtitle2"> Uh-Oh. Looks like you are not following anyone. Go</Typography>
+//   }else{
+//     return favoritesResults.map((user, index) => (
+//       <Grid item xs={5} sm={6}>
+//           <FavoriteCard checked={checked} index={index} image={user.image} username={user.username} pronoun={user.pronoun} user_id={user.user_id} about_me={user.about_me}/>
+//       </Grid>))}
+//   }
+// }
+
   return (
         <>
-            {favoritesResults ? favoritesResults.map((user, index) => (
-                <Grid item xs={5} sm={6}>
+            {favoritesResults && favoritesResults.length != 0 ? favoritesResults.map((user, index) => (
+                <Grid item xs={5} sm={6} style={{marginTop: '10'}}>
                     <FavoriteCard checked={checked} index={index} image={user.image} username={user.username} pronoun={user.pronoun} user_id={user.user_id} about_me={user.about_me}/>
                 </Grid>
-        )) : (<CircularProgress color="secondary" />).then}
+        )) : (<Typography style={{marginTop: 20}} variant="subtitle2"> Uh-Oh. Looks like you are not following anyone. Search for gamers at the top to follow.</Typography>)}
         </>
             )
         }
