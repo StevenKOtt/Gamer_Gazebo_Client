@@ -25,9 +25,12 @@ const useStyles = makeStyles((theme) => ({
 
     },
     absolute: {
-    position: 'absolute',
-    bottom: theme.spacing(2),
-    right: theme.spacing(3),
+        margin: 0,
+        top: 'auto',
+        right: 20,
+        bottom: 20,
+        left: 'auto',
+        position: 'fixed',
   },
     paperComponents: {
         background: '#39203C',
@@ -71,6 +74,9 @@ const Profile = (props) => {
             following: userInfo
         }
     )
+    React.useEffect(() => {
+  window.scrollTo(0, 0)
+}, [])
 
 
     const checkFollow = async () => {
@@ -253,11 +259,22 @@ React.useEffect(() => {
                         </Grid>
                     )) : (<CircularProgress color="secondary" />)}
                     <Grid item xs={6} sm={4} lg={3}>
-                   
-            {JSON.parse(window.localStorage.getItem('auth')).user_id == userInfo ?
+                    </Grid>
+            
+            </Grid>
+            <Grid container item xs={12}>
+                <Grid container item xs={6}> 
+                
+                </Grid>
+                
+            </Grid>            
+        </Grid>
+        <Grid item  sm={1}></Grid>
+    </Grid>
+    {JSON.parse(window.localStorage.getItem('auth')).user_id == userInfo ?
 
                    ( <Tooltip title="Add">
-                        <Fab aria-label="add" onClick={handleNewOpen} className={classes.absolute} style={{ fontSize: 20 }} variant="extended">
+                        <Fab aria-label="add" onClick={handleNewOpen} className={classes.absolute} style={{ fontSize: 10 }} variant="extended">
                             <AddIcon />
                             Add a Game Card
                         </Fab>
@@ -280,18 +297,6 @@ React.useEffect(() => {
                         </Grid>
                     </Fade>
             </Modal>
-                    </Grid>
-            
-            </Grid>
-            <Grid container item xs={12}>
-                <Grid container item xs={6}> 
-                
-                </Grid>
-                
-            </Grid>            
-        </Grid>
-        <Grid item  sm={1}></Grid>
-    </Grid>
     </div>
     )
 }

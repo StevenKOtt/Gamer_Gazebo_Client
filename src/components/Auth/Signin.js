@@ -15,6 +15,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import {useHistory} from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom';
+
+
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -25,7 +29,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="https://www.linkedin.com/in/stevenkarlott/">
         Gamer Gazebo Corps
       </Link>{' '}
       {new Date().getFullYear()}
@@ -40,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    height: "100vh",
   },
   avatar: {
     margin: theme.spacing(1),
@@ -63,6 +66,7 @@ const SignIn = (props) => {
     username: "",
     password: ""
   })
+  const {history} =useHistory
   const [userData, setUserData] = React.useState(null)
   const [open, setOpen] = React.useState(false);
   const {state, dispatch} = useAppState()
@@ -111,10 +115,31 @@ const handleSubmit = (event) => {
           setUserData(data)
   })
 }
-
+React.useEffect(() => {
+  window.scrollTo(0, 0)
+}, [])
   return (
-    <Container component="main" maxWidth="xs">
+
+    
+    <Container component="main" maxWidth="xs" style={{height: "100vh"}}>
       <CssBaseline />
+      <Grid container direction="column" alignItems="align">
+        <Grid item xs={12} style={{textAlign: 'center'}}>
+
+        <Typography variant="h6">
+          Welcome back to Gamer Gazebo. Please sign to view your's and other's Gamer Gazebo Profile.
+        </Typography>
+        <Typography variant="body2">
+          New features coming soon:
+          </Typography>
+          <Typography varient="body2">
+          -Status-Feed bar
+          </Typography>
+          <Typography variant="body2">
+          -Loginless homepage          
+          </Typography>
+        </Grid>
+      </Grid>
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -160,18 +185,6 @@ const handleSubmit = (event) => {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2"  className = {classes.text}>
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link to="/signup" variant="body2"  className = {classes.text}>
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
         </form>
 
 
@@ -182,9 +195,15 @@ const handleSubmit = (event) => {
         </Snackbar>
         
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
+      <Grid container>
+            <Grid item>
+              <Link to="/signup" component={RouterLink} className = {classes.text}>
+                <Typography variant="overline">
+                  Don't have an account? Sign Up
+                  </Typography>
+              </Link>
+            </Grid>
+          </Grid>
     </Container>
   );
 }

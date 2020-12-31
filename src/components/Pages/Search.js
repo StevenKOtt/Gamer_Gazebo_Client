@@ -34,7 +34,9 @@ const Search = (props) => {
             console.log(data)
           });
       };
-
+React.useEffect(() => {
+  window.scrollTo(0, 0)
+}, [])
     React.useLayoutEffect(() => {
     getProfileInfo()
 

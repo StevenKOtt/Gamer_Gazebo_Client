@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    height: "100vh"
   },
   avatar: {
     margin: theme.spacing(1),
@@ -59,6 +58,10 @@ const Signup = (props) => {
     username: "",
     password: ""
   })
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   const [userData, setUserData] = React.useState(null)
   const {state, dispatch} = useAppState()
   const [open, setOpen] = React.useState(false);
@@ -110,15 +113,25 @@ const handleSubmit = (event) => {
 }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" style={{height: "100vh"}}>
       <CssBaseline />
       <Grid container direction="column" alignItems="align">
         <Grid item xs={12} style={{textAlign: 'center'}}>
 
-        <Typography variant="h6">
-          Welcome to Gamer Gazebo created by Steven Ott. Here, you can create a small profile, add some game cards with your gamer names and then search for other gamer profiles.
+        <Typography variant="subtitle2">
+          Welcome to Gamer Gazebo created by Steven Ott. You can create a small profile, add some game cards with your gamer names and then search for other gamer profiles. At this time there is no way to view unless you create an account. 
         </Typography>
-
+        <Typography></Typography>
+        <Typography variant="body2">
+          New features coming soon:
+          </Typography>
+          <Typography varient="body2">
+          -Status-Feed bar
+          </Typography>
+          <Typography variant="body2">
+          -Loginless homepage          
+          </Typography>
+      
         </Grid>
       </Grid>
       <div className={classes.paper}>
@@ -167,13 +180,6 @@ const handleSubmit = (event) => {
             Sign Up
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-            </Grid>
           </Grid>
         </form>
 
