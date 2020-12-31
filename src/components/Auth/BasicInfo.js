@@ -55,6 +55,7 @@ const {history} = useHistory
 const {token} = state
 const classes = useStyles();
 const [done, setDone] = React.useState(false)
+const [check_image, changeCheckImage] = React.useState(true)
 const [formData, setFormData] = React.useState({
       pronoun: "",
       username: state.username,
@@ -64,6 +65,19 @@ const [formData, setFormData] = React.useState({
       birthdate: null,
       image: {}
     })
+
+ const checkImage = () => {
+   if(Object.keys(formData.image).length === 0 && formData.image.constructor === Object) {
+      changeCheckImage(true)
+   }
+   else {
+   changeCheckImage(false)
+   }
+ }   
+
+React.useEffect(() => {
+  checkImage()
+},[formData.image])
 
     const uploadFile = (file, user) => {
       const upload = new DirectUpload(file, `${state.url}/rails/active_storage/direct_uploads`)
@@ -124,6 +138,7 @@ const handleSubmit = (event) => {
 )
 props.history.push("/")
 }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -212,6 +227,7 @@ props.history.push("/")
             fullWidth
             variant="contained"
             color="primary"
+            disabled={check_image}
             className={classes.submit}
           >
             Complete Sign-Up

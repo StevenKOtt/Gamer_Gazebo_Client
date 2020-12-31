@@ -94,6 +94,7 @@ const Header = (props) => {
            
             </Grid>
             <Grid item sm={3}>
+            {state.token ? (    
             <div className={classes.search}>
             <div className={classes.searchIcon}>
             <SearchIcon /> 
@@ -117,6 +118,7 @@ const Header = (props) => {
                 }}}
             />
           </div>
+            ) : null}
             </Grid>
             
             <Grid item>
