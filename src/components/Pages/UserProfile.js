@@ -3,7 +3,7 @@ import GameCard from '../Parts/Profile/GazeboSquare'
 import GameInfo from '../Parts/Profile/gameInfo'
 import Drawer from '@material-ui/core/Drawer';
 import clsx from 'clsx';
-import {Paper, Grid, Button,LinearProgress,CssBaseline,Slide, Container, Typography,CircularProgress, Avatar,Tooltip,Fab,Modal,Backdrop,Fade} from '@material-ui/core/';
+import {Paper, Grid, Button,LinearProgress,Slide, Typography,CircularProgress, Avatar,Tooltip,Fab,Modal,Backdrop,Fade} from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 import {useAppState} from '../../AppState.js'
 import { CenterFocusStrong } from '@material-ui/icons';
@@ -228,8 +228,9 @@ React.useEffect(() => {
 
     return (
 
-<Container className={classes.root} style={{height: '100vh'}}>
-<CssBaseline />
+
+    <div className={classes.root} style={{height: '100vh'}}>
+
     <Drawer anchor='left' open={drawer} onClose={toggleDrawer(false)}>
                 {/* <Grid container direction ="column" alignItems="center"> */}
                     {specificGame ? (
@@ -242,8 +243,7 @@ React.useEffect(() => {
                 {/* </Grid> */}
     </Drawer>
 
-    <Grid container item justify='space-around' className={classes.grid} style={{height: '100vh'}}
-     spacing={2}>
+    <Grid container justify='space-around' className={classes.grid} spacing={2}>
         <Grid item  sm={1}></Grid>
         <Grid container item direction= "column" xs={12} sm={10} spacing ={4}>
             <Slide in={'true'} direction={"right"} timeout={500}>
@@ -259,6 +259,8 @@ React.useEffect(() => {
                         </Grid>
                     )) : (<CircularProgress color="secondary" />)}
                     <Grid item xs={6} sm={4} lg={3}>
+                   
+
                     </Grid>
             
             </Grid>
@@ -297,7 +299,7 @@ React.useEffect(() => {
                         </Grid>
                     </Fade>
             </Modal>
-    </Container>
+    </div>
     )
 }
 
